@@ -1,0 +1,27 @@
+{
+  "name": "web-components-app",
+  "private": true,
+  "author": "deptyped <deptyped@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "@grammyjs/web-app": "^0.0.1",
+    "@vue/composition-api": "^1.6.0",
+    "deepmerge": "^4.2.2",
+    "grammy-web-components": "*",
+    "sass": "~1.32",
+    "sass-loader": "^12.6.0",
+    "unplugin-vue-components": "^0.19.5",
+    "unplugin-vue2-script-setup": "^0.10.2",
+    "vite": "^2.9.7",
+    "vite-plugin-vue2": "^2.0.0",
+    "vue": "^2.6.14",
+    "vue-qrcode-reader": "^3.1.0",
+    "vue-router": "^3.5.3",
+    "vuetify": "^2.6.5"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "ESNext"
+    ],
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "useUnknownInCatchVariables": true,
+    "strict": true,
+    "incremental": true,
+    "module": "CommonJS",
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": "src"
+  },
+  "include": [
+    "src/"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    },
+    "playground-bot#build": {
+      "dependsOn": ["grammy-components#build"]
+    }
+  }
+}

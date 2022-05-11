@@ -1,0 +1,21 @@
+{
+    "folders": [
+        {
+            "name": "root",
+            "path": "."
+        },
+        {
+            "path": "apps/web-components-app"
+        },
+        {
+            "path": "apps/playground-bot"
+        },
+        {
+            "path": "packages/components"
+        }
+    ],
+    "settings": {
+        "deno.enable": true,
+        "deno.lint": false
+    }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "grammy-components",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Components for grammY",
+  "main": "./dist/mod.js",
+  "types": "./dist/mod.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/mod.js"
+    }
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "deno2node tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bot-base/grammy-components.git"
+  },
+  "author": "deptyped <deptyped@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bot-base/grammy-components/issues"
+  },
+  "homepage": "https://github.com/bot-base/grammy-components#readme",
+  "devDependencies": {
+    "@grammyjs/types": "^2.7.1",
+    "@types/node": "^17.0.31",
+    "deno2node": "^1.3.0",
+    "grammy": "^1.8.3"
+  }
+}
