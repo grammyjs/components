@@ -1,8 +1,6 @@
 import { types, url } from "../deps.deno.ts";
 
-const {
-  URLSearchParams,
-} = url;
+const { URLSearchParams } = url;
 
 export interface WebAppComponentProps {
   lang?: string;
@@ -10,12 +8,13 @@ export interface WebAppComponentProps {
 }
 
 export interface WebAppComponentConfig {
-  url?: string;
+  baseUrl?: string;
+  name?: string;
 }
 
 export class WebAppComponent<
   P extends WebAppComponentProps = WebAppComponentProps,
-  C extends WebAppComponentConfig = WebAppComponentConfig,
+  C extends WebAppComponentConfig = WebAppComponentConfig
 > {
   #props: P;
   #config: C;
@@ -41,10 +40,7 @@ export class WebAppComponent<
     return new constructor(this.props, this.config);
   }
 
-  setProperty<K extends keyof P = keyof P>(
-    key: K,
-    value: P[K],
-  ): this {
+  setProperty<K extends keyof P = keyof P>(key: K, value: P[K]): this {
     this.#props[key] = value;
     this.url = this.build();
 
@@ -80,6 +76,6 @@ export class WebAppComponent<
       params.set(key, value.toString());
     }
 
-    return `${this.#config.url}?${params}`;
+    return `${this.#config.baseUrl}/${this.#config.name}?${params}`;
   }
 }
