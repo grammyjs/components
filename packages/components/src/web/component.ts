@@ -5,6 +5,7 @@ const {
 } = url;
 
 export interface WebAppComponentProps {
+  lang?: string;
   callback?: string;
 }
 
