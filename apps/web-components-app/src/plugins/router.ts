@@ -19,7 +19,12 @@ export default new VueRouter({
     {
       path: "/qr-scanner",
       component: () => import("@/components/qr-scanner.vue"),
-      props: (route) => (route.query),
+      props: (route) => route.query,
+    },
+    {
+      path: "/color-picker",
+      component: () => import("@/components/color-picker.vue"),
+      props: (route) => route.query,
     },
   ],
 });

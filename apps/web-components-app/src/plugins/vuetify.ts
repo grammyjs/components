@@ -7,10 +7,10 @@ import uk from "@/locales/uk";
 Vue.use(Vuetify);
 
 export default new Vuetify({
-    lang: {
-        locales: {
-            en,
-            uk,
-        }
+  lang: {
+    locales: {
+      en,
+      uk,
     },
+  },
 });
