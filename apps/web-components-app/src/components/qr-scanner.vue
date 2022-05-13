@@ -15,10 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount } from "@vue/composition-api";
+import { ref, watch, onMounted, onBeforeUnmount, getCurrentInstance } from "@vue/composition-api";
 import WebApp from "@grammyjs/web-app";
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { QrScannerProps } from "grammy-components";
+
+const $vuetify = getCurrentInstance()?.proxy?.$vuetify
 
 const props: QrScannerProps = defineProps([
     'callback',
@@ -34,7 +36,7 @@ const onDecode = (data: string) => {
     result.value = data;
 
     WebApp.MainButton.setParams({
-        text: props.sendButtonText || 'SEND',
+        text: props.sendButtonText || $vuetify.lang.t('$vuetify.qrScanner.sendButtonText'),
         color: theme.value.button_color,
         is_active: true,
     })
@@ -46,7 +48,7 @@ const onCameraChange = async (promise: any) => {
         await promise;
 
         WebApp.MainButton.setParams({
-            text: 'Point camera at QR code',
+            text: $vuetify.lang.t('$vuetify.qrScanner.pointCamera'),
             color: theme.value.hint_color,
             is_active: false,
             is_visible: true
@@ -56,23 +58,13 @@ const onCameraChange = async (promise: any) => {
         const { name } = err as Error
 
         if (name === "NotAllowedError") {
-            error.value = "Error: You need to grant camera access permission";
+            error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.notAllowed');
         } else if (name === "NotFoundError") {
-            error.value = "Error: No camera on this device";
-        } else if (name === "NotSupportedError") {
-            error.value = "Error: Secure context required (HTTPS, localhost)";
-        } else if (name === "NotReadableError") {
-            error.value = "Error: Is the camera already in use?";
-        } else if (name === "OverconstrainedError") {
-            error.value = "Error: Installed cameras are not suitable";
-        } else if (name === "StreamApiNotSupportedError") {
-            error.value = "Error: Stream API is not supported in this browser";
-        } else if (name === "InsecureContextError") {
-            error.value =
-                "Error: Use HTTPS or localhost rather than HTTP.";
+            error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.notFound');
         } else {
-            error.value = `Error: Camera error (${name})`;
+            error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.unknown', name);
         }
+
         setTimeout(() => WebApp.close(), 5000)
     } finally {
         loading.value = false;

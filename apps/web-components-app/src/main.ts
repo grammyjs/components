@@ -1,8 +1,8 @@
 import Vue from "vue";
 import VueCompositionAPI from "@vue/composition-api";
 
-import vuetify from "./plugins/vuetify";
-import router from "./plugins/router";
+import vuetify from "@/plugins/vuetify";
+import router from "@/plugins/router";
 
 import App from "@/App.vue";
 
