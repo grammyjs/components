@@ -9,10 +9,15 @@
 <script setup lang="ts">
 import WebApp from "@grammyjs/web-app";
 import { onBeforeUnmount, onMounted, getCurrentInstance } from "@vue/composition-api";
+import rtlDetect from 'rtl-detect'
 
 const $vuetify = getCurrentInstance()?.proxy?.$vuetify
+const $route = getCurrentInstance()?.proxy?.$route
 
 const isDarkColorScheme = () => WebApp.colorScheme === 'dark' ? true : false
+const currentLang = ($route?.query.lang as string | undefined)
+    || navigator.language
+    || 'en'
 
 const onThemeChanged = () => {
     $vuetify.theme.dark = isDarkColorScheme()
@@ -28,7 +33,15 @@ const onThemeChanged = () => {
     // }
 }
 
-onThemeChanged()
+// initialization
+(() => {
+    // set theme
+    onThemeChanged()
+
+    // set language
+    $vuetify.lang.current = currentLang.substring(0, 2)
+    $vuetify.rtl = rtlDetect.isRtlLang($vuetify.lang.current);
+})()
 
 onMounted(() => {
     WebApp.onEvent('themeChanged', onThemeChanged)
