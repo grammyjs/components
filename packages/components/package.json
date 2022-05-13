@@ -5,11 +5,6 @@
   "description": "Components for grammY",
   "main": "./dist/mod.js",
   "types": "./dist/mod.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/mod.js"
-    }
-  },
   "files": [
     "dist",
     "package.json",

@@ -13,9 +13,5 @@
         {
             "path": "packages/components"
         }
-    ],
-    "settings": {
-        "deno.enable": true,
-        "deno.lint": false
-    }
+    ]
 }
