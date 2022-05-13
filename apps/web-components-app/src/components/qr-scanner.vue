@@ -19,6 +19,7 @@ import { ref, watch, onMounted, onBeforeUnmount, getCurrentInstance } from "@vue
 import WebApp from "@grammyjs/web-app";
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { QrScannerProps } from "grammy-components";
+import { sendResult } from "@/helpers/telegram";
 
 const $vuetify = getCurrentInstance()?.proxy?.$vuetify
 
@@ -86,36 +87,15 @@ const onTrack = (detectedCodes: any, ctx: CanvasRenderingContext2D) => {
     }
 };
 
-const onSave = async () => {
-    const { value } = result
+const onSave = () => sendResult({
+    value: result.value
+}, {
+    callback: props.callback
+})
 
-    if (typeof props.callback === 'string') {
-        WebApp.MainButton.showProgress()
-        try {
-            await fetch(props.callback,
-                {
-                    method: "POST",
-                    body: JSON.stringify({
-                        initData: WebApp.initData,
-                        data: {
-                            value
-                        }
-                    })
-                })
-            WebApp.close()
-        } catch (err) {
-            console.error(err)
-        } finally {
-            WebApp.MainButton.hideProgress()
-        }
-    } else {
-        WebApp.sendData(value)
-    }
-}
-
-watch(error, async (newValue, oldValue) => {
+watch(error, async (value, oldValue) => {
     WebApp.MainButton.setParams({
-        text: newValue.substring(0, 64),
+        text: value.substring(0, 64),
         color: '#ff0000',
         is_active: false,
         is_visible: true

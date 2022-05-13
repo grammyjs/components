@@ -12,9 +12,7 @@ export default defineConfig({
     ScriptSetup(),
     Components({
       transformer: "vue2",
-      resolvers: [
-        VuetifyResolver(),
-      ],
+      resolvers: [VuetifyResolver()],
     }),
   ],
   resolve: {
