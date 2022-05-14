@@ -1,17 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Components</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Web Components</title>
-</head>
+    <style>
+      .loader-wrapper {
+        height: var(--tg-viewport-height);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-<body>
-  <div id="app"></div>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script type="module" src="./src/main.ts"></script>
-</body>
+      .loader {
+        position: relative;
+        width: 256px;
+        height: 256px;
+      }
 
+      .loader div {
+        position: absolute;
+        border: 4px solid grey;
+        border-radius: 50%;
+        animation: loader 1s ease-out infinite;
+      }
+
+      .loader div:nth-child(2) {
+        animation-delay: -0.5s;
+      }
+
+      @keyframes loader {
+        0% {
+          top: 128px;
+          left: 128px;
+          width: 0;
+          height: 0;
+          opacity: 1;
+        }
+        100% {
+          top: 0;
+          left: 0;
+          width: 256px;
+          height: 256px;
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="loader-wrapper">
+        <div class="loader">
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+      WebApp.ready();
+    </script>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
 </html>

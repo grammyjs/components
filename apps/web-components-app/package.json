@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@grammyjs/web-app": "^0.0.1",
+    "@types/rtl-detect": "^1.0.0",
     "@vue/composition-api": "^1.6.0",
     "deepmerge": "^4.2.2",
     "grammy-components": "*",

@@ -8,7 +8,6 @@
 
 <script lang="ts">
 import WebApp from "@grammyjs/web-app";
-import { onBeforeUnmount, onMounted, defineComponent } from "@vue/composition-api";
 import rtlDetect from 'rtl-detect'
 
 const isDarkColorScheme = () => WebApp.colorScheme === 'dark' ? true : false

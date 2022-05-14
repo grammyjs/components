@@ -106,6 +106,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: ease-out 0.25s;
 }
 
 .picker {
