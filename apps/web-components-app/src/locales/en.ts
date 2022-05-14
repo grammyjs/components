@@ -19,4 +19,8 @@ export default {
     pickDate: "Pick a date",
     sendButtonText: 'Send "{0}"',
   },
+  timePicker: {
+    pickTime: "Pick a time",
+    sendButtonText: 'Send "{0}"',
+  },
 };
