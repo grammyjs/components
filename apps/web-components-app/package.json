@@ -16,6 +16,7 @@
     "rtl-detect": "^1.0.4",
     "sass": "~1.32",
     "sass-loader": "^12.6.0",
+    "start-of-week": "^3.8.0",
     "unplugin-vue-components": "^0.19.5",
     "unplugin-vue2-script-setup": "^0.10.2",
     "vite": "^2.9.7",

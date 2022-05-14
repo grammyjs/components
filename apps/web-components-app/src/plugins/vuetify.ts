@@ -8,6 +8,9 @@ import uk from "@/locales/uk";
 Vue.use(Vuetify);
 
 export default new Vuetify({
+  icons: {
+    iconfont: "mdiSvg",
+  },
   lang: {
     locales: {
       en,
