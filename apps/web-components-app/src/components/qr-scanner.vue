@@ -14,101 +14,116 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount, getCurrentInstance } from "@vue/composition-api";
+<script lang="ts">
+import { ref, watch, onMounted, onBeforeUnmount, getCurrentInstance, defineComponent } from "@vue/composition-api";
 import WebApp from "@grammyjs/web-app";
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { QrScannerProps } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";
 
-const $vuetify = getCurrentInstance()?.proxy?.$vuetify
-
-const props: QrScannerProps = defineProps([
+const props: Array<keyof QrScannerProps> = [
     'callback',
     'sendButtonText'
-])
+]
 
-const loading = ref(true);
-const theme = ref(WebApp.themeParams);
-const result = ref();
-const error = ref();
+export default defineComponent({
+    components: {
+        QrcodeStream
+    },
+    props,
+    setup(props, ctx) {
+        const $vuetify = ctx.root.$vuetify
 
-const onDecode = (data: string) => {
-    result.value = data;
+        const loading = ref(true);
+        const result = ref();
+        const error = ref();
 
-    WebApp.MainButton.setParams({
-        text: props.sendButtonText || $vuetify.lang.t('$vuetify.qrScanner.sendButtonText'),
-        color: theme.value.button_color,
-        is_active: true,
-    })
-    WebApp.MainButton.hideProgress()
-};
+        const onDecode = (data: string) => {
+            result.value = data;
 
-const onCameraChange = async (promise: any) => {
-    try {
-        await promise;
+            WebApp.MainButton.setParams({
+                text: props.sendButtonText || $vuetify.lang.t('$vuetify.qrScanner.sendButtonText'),
+                color: WebApp.themeParams.button_color,
+                is_active: true,
+            })
+            WebApp.MainButton.hideProgress()
+        };
 
-        WebApp.MainButton.setParams({
-            text: $vuetify.lang.t('$vuetify.qrScanner.pointCamera'),
-            color: theme.value.hint_color,
-            is_active: false,
-            is_visible: true
+        const onCameraChange = async (promise: any) => {
+            try {
+                await promise;
+
+                WebApp.MainButton.setParams({
+                    text: $vuetify.lang.t('$vuetify.qrScanner.pointCamera'),
+                    color: WebApp.themeParams.hint_color,
+                    is_active: false,
+                    is_visible: true
+                })
+                WebApp.MainButton.showProgress()
+            } catch (err) {
+                const { name } = err as Error
+
+                if (name === "NotAllowedError") {
+                    error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.notAllowed');
+                } else if (name === "NotFoundError") {
+                    error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.notFound');
+                } else {
+                    error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.unknown', name);
+                }
+
+                setTimeout(() => WebApp.close(), 5000)
+            } finally {
+                loading.value = false;
+            }
+        };
+
+        const onTrack = (detectedCodes: any, ctx: CanvasRenderingContext2D) => {
+            for (const detectedCode of detectedCodes) {
+                const [firstPoint, ...otherPoints] = detectedCode.cornerPoints;
+                ctx.strokeStyle = "grey";
+                ctx.beginPath();
+                ctx.moveTo(firstPoint.x, firstPoint.y);
+                for (const { x, y } of otherPoints) {
+                    ctx.lineTo(x, y);
+                }
+                ctx.lineTo(firstPoint.x, firstPoint.y);
+                ctx.closePath();
+                ctx.stroke();
+            }
+        };
+
+        const onSave = () => sendResult({
+            value: result.value
+        }, {
+            callback: props.callback
         })
-        WebApp.MainButton.showProgress()
-    } catch (err) {
-        const { name } = err as Error
 
-        if (name === "NotAllowedError") {
-            error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.notAllowed');
-        } else if (name === "NotFoundError") {
-            error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.notFound');
-        } else {
-            error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.unknown', name);
+        watch(error, async (value, oldValue) => {
+            WebApp.MainButton.setParams({
+                text: value.substring(0, 64),
+                color: '#ff0000',
+                is_active: false,
+                is_visible: true
+            })
+        })
+
+        onMounted(() => {
+            WebApp.onEvent('mainButtonClicked', onSave)
+        })
+
+        onBeforeUnmount(() => {
+            WebApp.offEvent('mainButtonClicked', onSave)
+        })
+
+        return {
+            loading,
+            result,
+            onCameraChange,
+            onTrack,
+            onDecode,
         }
-
-        setTimeout(() => WebApp.close(), 5000)
-    } finally {
-        loading.value = false;
     }
-};
-
-const onTrack = (detectedCodes: any, ctx: CanvasRenderingContext2D) => {
-    for (const detectedCode of detectedCodes) {
-        const [firstPoint, ...otherPoints] = detectedCode.cornerPoints;
-        ctx.strokeStyle = "grey";
-        ctx.beginPath();
-        ctx.moveTo(firstPoint.x, firstPoint.y);
-        for (const { x, y } of otherPoints) {
-            ctx.lineTo(x, y);
-        }
-        ctx.lineTo(firstPoint.x, firstPoint.y);
-        ctx.closePath();
-        ctx.stroke();
-    }
-};
-
-const onSave = () => sendResult({
-    value: result.value
-}, {
-    callback: props.callback
-})
-
-watch(error, async (value, oldValue) => {
-    WebApp.MainButton.setParams({
-        text: value.substring(0, 64),
-        color: '#ff0000',
-        is_active: false,
-        is_visible: true
-    })
-})
-
-onMounted(() => {
-    WebApp.onEvent('mainButtonClicked', onSave)
-})
-
-onBeforeUnmount(() => {
-    WebApp.offEvent('mainButtonClicked', onSave)
-})
+});
 </script>
 
 <style scoped>

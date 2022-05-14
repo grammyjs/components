@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib/framework";
+import type VuetifyFramework from "vuetify";
 
 import en from "@/locales/en";
 import uk from "@/locales/uk";
@@ -13,4 +14,4 @@ export default new Vuetify({
       uk,
     },
   },
-});
+}) as VuetifyFramework;
