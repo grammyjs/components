@@ -15,4 +15,8 @@ export default {
     pickColor: "Виберіть колір",
     sendButtonText: "Відправити",
   },
+  dataPicker: {
+    pickDate: "Виберіть дату",
+    sendButtonText: 'Відправити "{0}"',
+  },
 };

@@ -15,4 +15,8 @@ export default {
     pickColor: "Pick a color",
     sendButtonText: "Send",
   },
+  dataPicker: {
+    pickDate: "Pick a date",
+    sendButtonText: 'Send "{0}"',
+  },
 };

@@ -6,11 +6,13 @@ import "@vue/runtime-core";
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     ColorPicker: typeof import("./src/components/color-picker.vue")["default"];
+    DatePicker: typeof import("./src/components/date-picker.vue")["default"];
     QrScanner: typeof import("./src/components/qr-scanner.vue")["default"];
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];
     VApp: typeof import("vuetify/lib")["VApp"];
     VColorPicker: typeof import("vuetify/lib")["VColorPicker"];
+    VDatePicker: typeof import("vuetify/lib")["VDatePicker"];
     VMain: typeof import("vuetify/lib")["VMain"];
     VProgressCircular: typeof import("vuetify/lib")["VProgressCircular"];
     VSnackbar: typeof import("vuetify/lib")["VSnackbar"];
