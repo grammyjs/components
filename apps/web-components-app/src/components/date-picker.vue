@@ -31,7 +31,7 @@ export default defineComponent({
 
     watch(result, async (value, oldValue) => {
       WebApp.MainButton.setParams({
-        text: $vuetify.lang.t("$vuetify.dataPicker.sendButtonText", result.value),
+        text: $vuetify.lang.t("$vuetify.datePicker.sendButtonText", result.value),
         color: WebApp.themeParams.button_color,
         is_active: true,
         is_visible: true,
@@ -41,7 +41,7 @@ export default defineComponent({
     // initialization
     (() => {
       WebApp.MainButton.setParams({
-        text: $vuetify.lang.t("$vuetify.dataPicker.pickDate"),
+        text: $vuetify.lang.t("$vuetify.datePicker.pickDate"),
         color: WebApp.themeParams.hint_color,
         is_active: false,
         is_visible: true,
