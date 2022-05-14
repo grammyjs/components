@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount, getCurrentInstance, defineComponent } from "@vue/composition-api";
 import WebApp from "@grammyjs/web-app";
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { QrScannerProps } from "grammy-components";

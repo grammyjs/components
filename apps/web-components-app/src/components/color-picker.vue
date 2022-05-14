@@ -7,13 +7,6 @@
 </template>
 
 <script lang="ts">
-import {
-    ref,
-    watch,
-    onMounted,
-    onBeforeUnmount,
-    defineComponent,
-} from "@vue/composition-api";
 import WebApp from "@grammyjs/web-app";
 import { ColorPickerProps } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";

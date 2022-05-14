@@ -6,13 +6,6 @@
 </template>
 
 <script lang="ts">
-import {
-  ref,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  defineComponent,
-} from "@vue/composition-api";
 import WebApp from "@grammyjs/web-app";
 import getStartOfWeek from 'start-of-week'
 import { DatePickerProps } from "grammy-components";
