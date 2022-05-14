@@ -19,4 +19,8 @@ export default {
     pickDate: "Виберіть дату",
     sendButtonText: 'Відправити "{0}"',
   },
+  timePicker: {
+    pickTime: "Виберіть час",
+    sendButtonText: 'Відправити "{0}"',
+  },
 };

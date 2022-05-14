@@ -10,12 +10,14 @@ declare module "@vue/runtime-core" {
     QrScanner: typeof import("./components/qr-scanner.vue")["default"];
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];
+    TimePicker: typeof import("./components/time-picker.vue")["default"];
     VApp: typeof import("vuetify/lib")["VApp"];
     VColorPicker: typeof import("vuetify/lib")["VColorPicker"];
     VDatePicker: typeof import("vuetify/lib")["VDatePicker"];
     VMain: typeof import("vuetify/lib")["VMain"];
     VProgressCircular: typeof import("vuetify/lib")["VProgressCircular"];
     VSnackbar: typeof import("vuetify/lib")["VSnackbar"];
+    VTimePicker: typeof import("vuetify/lib")["VTimePicker"];
   }
 }
 

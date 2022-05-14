@@ -26,6 +26,11 @@ export default new VueRouter({
           component: () => import("@/components/date-picker.vue"),
           props: (route) => route.query,
         },
+        {
+          path: "time-picker",
+          component: () => import("@/components/time-picker.vue"),
+          props: (route) => route.query,
+        },
       ],
     },
     {
