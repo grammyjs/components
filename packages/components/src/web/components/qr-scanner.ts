@@ -1,24 +1,62 @@
+import { grammy } from "../../deps.deno.ts";
 import {
   WebAppComponent,
   WebAppComponentConfig,
   WebAppComponentProps,
+  WebAppComponentResult,
+  WebAppComponentCallbackResult,
 } from "../component.ts";
 import { BASE_URL } from "../config.ts";
+import { WebAppDataFlavor } from "../context.ts";
+import { matchWebAppData } from "../filter.ts";
+import { MaybePromise } from "../types.ts";
 
-export interface QrScannerProps extends WebAppComponentProps {
+export type QrScannerProps = WebAppComponentProps & {
   sendButtonText?: string;
-}
+};
+
+export type QrScannerConfig = WebAppComponentConfig;
+
+export type QrScannerResult = WebAppComponentResult<"qr"> & {
+  value: string;
+};
+
+export type QrScannerTransformedResult = QrScannerResult;
+
+export type QrScannerCallbackResult = WebAppComponentCallbackResult<
+  "qr",
+  QrScannerResult
+>;
 
 export class QrScanner<
-  P extends QrScannerProps,
-  C extends WebAppComponentConfig
-> extends WebAppComponent<P, C> {
-  constructor(props?: P, config?: C) {
+  TProps extends QrScannerProps,
+  TConfig extends WebAppComponentConfig
+> extends WebAppComponent<TProps, TConfig> {
+  constructor(props?: TProps, config?: TConfig) {
     const defaultConfig: WebAppComponentConfig = {
       baseUrl: BASE_URL,
-      name: "qr-scanner",
+      path: "qr-scanner",
     };
 
     super(props, Object.assign(defaultConfig, config));
+  }
+
+  static match<
+    TContext extends grammy.Context & WebAppDataFlavor,
+    TQrScannerContext extends TContext &
+      Required<WebAppDataFlavor<QrScannerResult, QrScannerTransformedResult>>
+  >(
+    filter: (ctx: TQrScannerContext) => MaybePromise<boolean> = () => true
+  ): (ctx: TContext) => MaybePromise<boolean> {
+    const matchComponent = matchWebAppData<
+      TContext,
+      QrScannerResult,
+      QrScannerTransformedResult
+    >((ctx) => ctx.webAppDataRaw.type === "qr");
+
+    return (ctx) =>
+      Promise.resolve(matchComponent(ctx)).then((matched) =>
+        matched ? filter(ctx as TQrScannerContext) : false
+      );
   }
 }

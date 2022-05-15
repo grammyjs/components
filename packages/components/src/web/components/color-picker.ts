@@ -1,24 +1,85 @@
+import { grammy } from "../../deps.deno.ts";
 import {
   WebAppComponent,
   WebAppComponentConfig,
   WebAppComponentProps,
+  WebAppComponentResult,
+  WebAppComponentCallbackResult,
 } from "../component.ts";
 import { BASE_URL } from "../config.ts";
+import { WebAppDataFlavor } from "../context.ts";
+import { matchWebAppData } from "../filter.ts";
+import { MaybePromise } from "../types.ts";
 
-export interface ColorPickerProps extends WebAppComponentProps {
+export type ColorPickerProps = WebAppComponentProps & {
   sendButtonText?: string;
-}
+};
+
+export type ColorPickerConfig = WebAppComponentConfig;
+
+export type ColorPickerResult = WebAppComponentResult<"color"> & {
+  alpha: number;
+  hex: string;
+  hexa: string;
+  hsla: {
+    h: number;
+    s: number;
+    l: number;
+    a: number;
+  };
+  hsva: {
+    h: number;
+    s: number;
+    v: number;
+    a: number;
+  };
+  hue: number;
+  rgba: {
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+  };
+};
+
+export type ColorPickerTransformedResult = ColorPickerResult;
+
+export type ColorPickerCallbackResult = WebAppComponentCallbackResult<
+  "color",
+  ColorPickerResult
+>;
 
 export class ColorPicker<
-  P extends ColorPickerProps,
-  C extends WebAppComponentConfig
-> extends WebAppComponent<P, C> {
-  constructor(props?: P, config?: C) {
+  TProps extends ColorPickerProps,
+  TConfig extends WebAppComponentConfig
+> extends WebAppComponent<TProps, TConfig> {
+  constructor(props?: TProps, config?: TConfig) {
     const defaultConfig: WebAppComponentConfig = {
       baseUrl: BASE_URL,
-      name: "color-picker",
+      path: "color-picker",
     };
 
     super(props, Object.assign(defaultConfig, config));
+  }
+
+  static match<
+    TContext extends grammy.Context & WebAppDataFlavor,
+    TColorPickerContext extends TContext &
+      Required<
+        WebAppDataFlavor<ColorPickerResult, ColorPickerTransformedResult>
+      >
+  >(
+    filter: (ctx: TColorPickerContext) => MaybePromise<boolean> = () => true
+  ): (ctx: TContext) => MaybePromise<boolean> {
+    const matchComponent = matchWebAppData<
+      TContext,
+      ColorPickerResult,
+      ColorPickerTransformedResult
+    >((ctx) => ctx.webAppDataRaw.type === "color");
+
+    return (ctx) =>
+      Promise.resolve(matchComponent(ctx)).then((matched) =>
+        matched ? filter(ctx as TColorPickerContext) : false
+      );
   }
 }

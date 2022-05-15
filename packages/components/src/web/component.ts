@@ -1,4 +1,5 @@
 import { types, url } from "../deps.deno.ts";
+import { WebAppInitData } from "./telegram-types.ts";
 
 const { URLSearchParams } = url;
 
@@ -9,28 +10,41 @@ export interface WebAppComponentProps {
 
 export interface WebAppComponentConfig {
   baseUrl?: string;
-  name?: string;
+  path?: string;
+}
+
+export interface WebAppComponentResult<T extends string> {
+  type: T;
+}
+
+export interface WebAppComponentCallbackResult<
+  T extends string,
+  D extends WebAppComponentResult<T>
+> {
+  initData: string;
+  initDataUnsafe: WebAppInitData;
+  data: D;
 }
 
 export class WebAppComponent<
-  P extends WebAppComponentProps = WebAppComponentProps,
-  C extends WebAppComponentConfig = WebAppComponentConfig
+  TProps extends WebAppComponentProps = WebAppComponentProps,
+  TConfig extends WebAppComponentConfig = WebAppComponentConfig
 > {
-  #props: P;
-  #config: C;
+  #props: TProps;
+  #config: TConfig;
   url: string;
 
-  constructor(props?: P, config?: C) {
+  constructor(props?: TProps, config?: TConfig) {
     this.#props = Object.assign({}, props);
     this.#config = Object.assign({}, config);
     this.url = this.build();
   }
 
-  get props(): P {
+  get props(): TProps {
     return this.#props;
   }
 
-  get config(): C {
+  get config(): TConfig {
     return this.#config;
   }
 
@@ -40,7 +54,10 @@ export class WebAppComponent<
     return new constructor(this.props, this.config);
   }
 
-  setProperty<K extends keyof P = keyof P>(key: K, value: P[K]): this {
+  setProperty<TKey extends keyof TProps = keyof TProps>(
+    key: TKey,
+    value: TProps[TKey]
+  ): this {
     this.#props[key] = value;
     this.url = this.build();
 
@@ -76,6 +93,6 @@ export class WebAppComponent<
       params.set(key, value.toString());
     }
 
-    return `${this.#config.baseUrl}/${this.#config.name}?${params}`;
+    return `${this.#config.baseUrl}/${this.#config.path}?${params}`;
   }
 }
