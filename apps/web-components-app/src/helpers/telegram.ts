@@ -4,7 +4,7 @@ interface Options {
   callback?: string;
 }
 
-export const sendResult = async (data: any, options?: Options) => {
+export const sendResult = async <D>(data: D, options?: Options) => {
   const { callback } = options || {};
 
   if (typeof callback === "string") {

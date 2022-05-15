@@ -8,7 +8,7 @@
 <script lang="ts">
 import WebApp from "@grammyjs/web-app";
 import getStartOfWeek from 'start-of-week'
-import { DatePickerProps } from "grammy-components";
+import type { DatePickerProps, DatePickerResult } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";
 
 const props: Array<keyof DatePickerProps> = ["callback"];
@@ -23,7 +23,8 @@ export default defineComponent({
     const result = ref();
 
     const onSave = () =>
-      sendResult({
+      sendResult<DatePickerResult>({
+        type: 'date',
         value: result.value
       }, {
         callback: props.callback,

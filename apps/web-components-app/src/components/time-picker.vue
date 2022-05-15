@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import WebApp from "@grammyjs/web-app";
-import type { TimePickerProps } from "grammy-components";
+import type { TimePickerProps, TimePickerResult } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";
 
 const props: Array<keyof TimePickerProps> = ["callback"];
@@ -20,7 +20,9 @@ export default defineComponent({
     const result = ref();
 
     const onSave = () =>
-      sendResult({
+      sendResult<TimePickerResult>({
+        type: 'time',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         value: result.value
       }, {
         callback: props.callback,

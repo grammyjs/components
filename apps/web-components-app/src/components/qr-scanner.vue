@@ -17,7 +17,7 @@
 <script lang="ts">
 import WebApp from "@grammyjs/web-app";
 import { QrcodeStream } from 'vue-qrcode-reader'
-import { QrScannerProps } from "grammy-components";
+import type { QrScannerProps, QrScannerResult } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";
 
 const props: Array<keyof QrScannerProps> = [
@@ -91,7 +91,8 @@ export default defineComponent({
             }
         };
 
-        const onSave = () => sendResult({
+        const onSave = () => sendResult<QrScannerResult>({
+            type: 'qr',
             value: result.value
         }, {
             callback: props.callback

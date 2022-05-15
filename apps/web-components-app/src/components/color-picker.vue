@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import WebApp from "@grammyjs/web-app";
-import { ColorPickerProps } from "grammy-components";
+import type { ColorPickerProps, ColorPickerResult } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";
 import { getViewport } from "@/helpers/viewport";
 
@@ -45,7 +45,10 @@ export default defineComponent({
         };
 
         const onSave = () =>
-            sendResult(result.value, {
+            sendResult<ColorPickerResult>({
+                type: 'color',
+                ...result.value
+            }, {
                 callback: props.callback,
             });
 
