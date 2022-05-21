@@ -45,6 +45,13 @@ export class DatePicker<
     super(props, Object.assign(defaultConfig, config));
   }
 
+  static transform({ value }: DatePickerResult): DatePickerTransformedResult {
+    return {
+      type: "date",
+      value: new Date(value),
+    };
+  }
+
   static match<
     TContext extends grammy.Context & WebAppDataFlavor,
     TDatePickerContext extends TContext & DatePickerContext
@@ -56,10 +63,7 @@ export class DatePicker<
       DatePickerResult,
       DatePickerTransformedResult
     >((ctx) => ctx.webAppDataRaw.type === "date", {
-      transform: ({ value }) => ({
-        type: "date",
-        value: new Date(value),
-      }),
+      transform: this.transform,
     });
 
     return (ctx) =>

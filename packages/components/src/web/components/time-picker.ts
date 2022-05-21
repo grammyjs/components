@@ -47,6 +47,17 @@ export class TimePicker<
     super(props, Object.assign(defaultConfig, config));
   }
 
+  static transform({
+    value,
+    timeZone,
+  }: TimePickerResult): TimePickerTransformedResult {
+    return {
+      type: "time",
+      value: new Date(`1970-01-01T${value}:00Z`),
+      timeZone,
+    };
+  }
+
   static match<
     TContext extends grammy.Context & WebAppDataFlavor,
     TTimePickerContext extends TContext & TimePickerContext
@@ -58,11 +69,7 @@ export class TimePicker<
       TimePickerResult,
       TimePickerTransformedResult
     >((ctx) => ctx.webAppDataRaw.type === "time", {
-      transform: ({ timeZone, value }) => ({
-        type: "time",
-        value: new Date(`1970-01-01T${value}:00Z`),
-        timeZone,
-      }),
+      transform: this.transform,
     });
 
     return (ctx) =>

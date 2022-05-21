@@ -45,6 +45,10 @@ export class QrScanner<
     super(props, Object.assign(defaultConfig, config));
   }
 
+  static transform(data: QrScannerResult): QrScannerTransformedResult {
+    return data;
+  }
+
   static match<
     TContext extends grammy.Context & WebAppDataFlavor,
     TQrScannerContext extends TContext & QrScannerContext
@@ -55,7 +59,9 @@ export class QrScanner<
       TContext,
       QrScannerResult,
       QrScannerTransformedResult
-    >((ctx) => ctx.webAppDataRaw.type === "qr");
+    >((ctx) => ctx.webAppDataRaw.type === "qr", {
+      transform: this.transform,
+    });
 
     return (ctx) =>
       Promise.resolve(matchComponent(ctx)).then((matched) =>

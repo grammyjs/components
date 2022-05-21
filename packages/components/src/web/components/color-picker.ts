@@ -66,6 +66,10 @@ export class ColorPicker<
     super(props, Object.assign(defaultConfig, config));
   }
 
+  static transform(data: ColorPickerResult): ColorPickerTransformedResult {
+    return data;
+  }
+
   static match<
     TContext extends grammy.Context & WebAppDataFlavor,
     TColorPickerContext extends TContext & ColorPickerContext
@@ -76,7 +80,9 @@ export class ColorPicker<
       TContext,
       ColorPickerResult,
       ColorPickerTransformedResult
-    >((ctx) => ctx.webAppDataRaw.type === "color");
+    >((ctx) => ctx.webAppDataRaw.type === "color", {
+      transform: this.transform,
+    });
 
     return (ctx) =>
       Promise.resolve(matchComponent(ctx)).then((matched) =>
