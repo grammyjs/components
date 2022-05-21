@@ -4,9 +4,9 @@
 
 Set of useful components for grammY.
 
-<!-- [Documentation »](./packages/components#documentation) -->
+[Documentation »](./packages/components/README.md)
 
-## Installation
+## Install
 
 ### Node
 
@@ -16,35 +16,44 @@ Set of useful components for grammY.
 
 // TODO
 
-## Example
+## Usage
 
-```js
-import { Bot, Keyboard } from "https://deno.land/x/grammy@v1.8.3/mod.ts";
-import { QrScanner } from "https://github.com/bot-base/grammy-components/raw/main/packages/components/src/mod.ts";
+// TODO: add imports after publishing
 
-const bot = new Bot(""); // <-- put your authentication token between the ""
+```ts
+// Extend bot context type
+export type MyContext = Context & WebAppDataFlavor;
 
-bot
-  .on("message")
-  .on(":web_app_data", (ctx) => ctx.reply(ctx.message.web_app_data.data));
+// Create a bot, specify the extended context
+const bot = new Bot<MyContext>(""); // <-- put your authentication token between the ""
 
-bot.command("start", (ctx) => {
-  ctx.reply("QR component", {
-    reply_markup: new Keyboard().webApp("Scan QR", new QrScanner().build()),
+bot.command("start", async (ctx) => {
+  const keyboard = new Keyboard();
+
+  // Sending the component to the user
+  keyboard.webApp("Click to pick", new TimePicker().build());
+
+  await ctx.reply("Hey, pick a time!", {
+    reply_markup: keyboard,
   });
+});
+
+// Handle time selected by a user
+bot.filter(TimePicker.match(), (ctx) => {
+  const { time } = ctx.webAppData;
+
+  return ctx.reply(`You chose ${time.getUTCHours()}:${time.getUTCMinutes()}`);
 });
 
 bot.start();
 ```
 
-## List of components
+## Component List
 
-// TODO
-
-- Keyboard components
-  - ...
-- Web components
-  - `QrScanner` - ...
+- [Color Picker](./packages/components/README.md#color-picker) let select a color.
+- [Date Picker](./packages/components/README.md#date-picker) let select a date.
+- [QR Scanner](./packages/components/README.md#qr-scanner) let scan a QR.
+- [Time Picker](./packages/components/README.md#time-picker) let select a time.
 
 ## Repository contents
 
@@ -54,7 +63,7 @@ bot.start();
     - `web` - Module that creates buttons of web components
     - `keyboard` - Module that implements keyboard components
 - Apps
-  - [`web-components-app`](./apps/web-components-app/) - Application that
+  - [`web-components-app`](./apps/web-components-app/) - Web application that
     implements web components
   - [`playground-bot`](./apps/playground-bot/) - Demo bot that uses all
     components
