@@ -28,6 +28,10 @@ export type DatePickerCallbackResult = WebAppComponentCallbackResult<
   DatePickerResult
 >;
 
+export type DatePickerContext = Required<
+  WebAppDataFlavor<DatePickerResult, DatePickerTransformedResult>
+>;
+
 export class DatePicker<
   TProps extends DatePickerProps,
   TConfig extends WebAppComponentConfig
@@ -43,8 +47,7 @@ export class DatePicker<
 
   static match<
     TContext extends grammy.Context & WebAppDataFlavor,
-    TDatePickerContext extends TContext &
-      Required<WebAppDataFlavor<DatePickerResult, DatePickerTransformedResult>>
+    TDatePickerContext extends TContext & DatePickerContext
   >(
     filter: (ctx: TDatePickerContext) => MaybePromise<boolean> = () => true
   ): (ctx: TContext) => MaybePromise<boolean> {

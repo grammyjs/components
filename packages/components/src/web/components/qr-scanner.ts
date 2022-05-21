@@ -28,6 +28,10 @@ export type QrScannerCallbackResult = WebAppComponentCallbackResult<
   QrScannerResult
 >;
 
+export type QrScannerContext = Required<
+  WebAppDataFlavor<QrScannerResult, QrScannerTransformedResult>
+>;
+
 export class QrScanner<
   TProps extends QrScannerProps,
   TConfig extends WebAppComponentConfig
@@ -43,8 +47,7 @@ export class QrScanner<
 
   static match<
     TContext extends grammy.Context & WebAppDataFlavor,
-    TQrScannerContext extends TContext &
-      Required<WebAppDataFlavor<QrScannerResult, QrScannerTransformedResult>>
+    TQrScannerContext extends TContext & QrScannerContext
   >(
     filter: (ctx: TQrScannerContext) => MaybePromise<boolean> = () => true
   ): (ctx: TContext) => MaybePromise<boolean> {

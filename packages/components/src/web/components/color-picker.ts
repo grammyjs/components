@@ -49,6 +49,10 @@ export type ColorPickerCallbackResult = WebAppComponentCallbackResult<
   ColorPickerResult
 >;
 
+export type ColorPickerContext = Required<
+  WebAppDataFlavor<ColorPickerResult, ColorPickerTransformedResult>
+>;
+
 export class ColorPicker<
   TProps extends ColorPickerProps,
   TConfig extends WebAppComponentConfig
@@ -64,10 +68,7 @@ export class ColorPicker<
 
   static match<
     TContext extends grammy.Context & WebAppDataFlavor,
-    TColorPickerContext extends TContext &
-      Required<
-        WebAppDataFlavor<ColorPickerResult, ColorPickerTransformedResult>
-      >
+    TColorPickerContext extends TContext & ColorPickerContext
   >(
     filter: (ctx: TColorPickerContext) => MaybePromise<boolean> = () => true
   ): (ctx: TContext) => MaybePromise<boolean> {

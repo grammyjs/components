@@ -30,6 +30,10 @@ export type TimePickerCallbackResult = WebAppComponentCallbackResult<
   TimePickerResult
 >;
 
+export type TimePickerContext = Required<
+  WebAppDataFlavor<TimePickerResult, TimePickerTransformedResult>
+>;
+
 export class TimePicker<
   TProps extends TimePickerProps,
   TConfig extends WebAppComponentConfig
@@ -45,8 +49,7 @@ export class TimePicker<
 
   static match<
     TContext extends grammy.Context & WebAppDataFlavor,
-    TTimePickerContext extends TContext &
-      Required<WebAppDataFlavor<TimePickerResult, TimePickerTransformedResult>>
+    TTimePickerContext extends TContext & TimePickerContext
   >(
     filter: (ctx: TTimePickerContext) => MaybePromise<boolean> = () => true
   ): (ctx: TContext) => MaybePromise<boolean> {
