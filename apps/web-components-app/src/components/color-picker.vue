@@ -11,6 +11,7 @@ import WebApp from "@grammyjs/web-app";
 import type { ColorPickerProps, ColorPickerResult } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";
 import { getViewport } from "@/helpers/viewport";
+import { getBrowserName } from "@/helpers/detect-browser";
 
 const props: Array<keyof ColorPickerProps> = [
     'callback',
@@ -41,6 +42,10 @@ export default defineComponent({
                 pickerSize.value = viewportWidth * 0.9;
             } else {
                 pickerSize.value = viewportHeight * 0.9;
+            }
+
+            if (getBrowserName() == 'safari') {
+                pickerSize.value = pickerSize.value * 0.9
             }
         };
 
