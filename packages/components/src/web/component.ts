@@ -54,7 +54,7 @@ export class WebAppComponent<
     return new constructor(this.props, this.config);
   }
 
-  setProperty<TKey extends keyof TProps = keyof TProps>(
+  setProp<TKey extends keyof TProps = keyof TProps>(
     key: TKey,
     value: TProps[TKey]
   ): this {
