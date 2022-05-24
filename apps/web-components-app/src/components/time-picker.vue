@@ -29,8 +29,15 @@ export default defineComponent({
       });
 
     watch(result, async (value, oldValue) => {
+      const time = new Date(`1970-01-01T${result.value}:00Z`).toLocaleTimeString($vuetify.lang.current, {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'UTC',
+        hour12: false
+      })
+
       WebApp.MainButton.setParams({
-        text: $vuetify.lang.t("$vuetify.timePicker.sendButtonText", result.value),
+        text: $vuetify.lang.t("$vuetify.timePicker.sendButtonText", time),
         color: WebApp.themeParams.button_color,
         is_active: true,
         is_visible: true,
