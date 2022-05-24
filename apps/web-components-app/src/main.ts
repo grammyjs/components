@@ -12,4 +12,8 @@ const app = new Vue({
   render: (h) => h(Layout),
   router,
   vuetify,
-}).$mount("#app");
+});
+
+router.onReady(() => {
+  app.$mount("#app");
+});
