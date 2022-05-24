@@ -9,7 +9,7 @@
     "useUnknownInCatchVariables": true,
     "strict": true,
     "incremental": true,
-    "module": "CommonJS",
+    "module": "ESNext",
     "target": "ESNext",
     "moduleResolution": "Node",
     "sourceMap": true,
