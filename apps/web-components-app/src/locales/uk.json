@@ -1,7 +1,7 @@
 {
   "qrScanner": {
     "pointCamera": "Наведіть камеру на QR-код",
-    "sendButtonText": "Відправити",
+    "sendButtonText": "Надіслати",
     "errors": {
       "notAllowed": "Помилка: Потрібно надати доступ до камери",
       "notFound": "Помилка: На цьому пристрої немає камери",
@@ -10,14 +10,14 @@
   },
   "colorPicker": {
     "pickColor": "Виберіть колір",
-    "sendButtonText": "Відправити"
+    "sendButtonText": "Надіслати"
   },
   "datePicker": {
     "pickDate": "Виберіть дату",
-    "sendButtonText": "Відправити \"{0}\""
+    "sendButtonText": "Надіслати \"{0}\""
   },
   "timePicker": {
     "pickTime": "Виберіть час",
-    "sendButtonText": "Відправити \"{0}\""
+    "sendButtonText": "Надіслати \"{0}\""
   }
 }
