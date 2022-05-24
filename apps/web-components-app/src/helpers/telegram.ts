@@ -15,6 +15,7 @@ export const sendResult = async <D>(data: D, options?: Options) => {
         method: "POST",
         body: JSON.stringify({
           initData: WebApp.initData,
+          initDataUnsafe: WebApp.initDataUnsafe,
           data,
         }),
       });
