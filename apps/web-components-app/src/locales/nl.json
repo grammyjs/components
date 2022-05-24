@@ -1,0 +1,23 @@
+{
+  "qrScanner": {
+    "pointCamera": "Richt de camera op QR-code",
+    "sendButtonText": "Versturen",
+    "errors": {
+      "notAllowed": "Fout: u moet toegang tot de camera toestaan",
+      "notFound": "Fout: Geen camera op dit apparaat",
+      "unknown": "Fout: {0}"
+    }
+  },
+  "colorPicker": {
+    "pickColor": "Kies een kleur",
+    "sendButtonText": "Versturen"
+  },
+  "datePicker": {
+    "pickDate": "Kies een datum",
+    "sendButtonText": "Stuur \"{0}\""
+  },
+  "timePicker": {
+    "pickTime": "Kies een tijd",
+    "sendButtonText": "Stuur \"{0}\""
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "qrScanner": {
+    "pointCamera": "Kamerayı QR koduna doğrultun",
+    "sendButtonText": "Gönder",
+    "errors": {
+      "notAllowed": "Hata: Kameraya erişime izin vermelisiniz",
+      "notFound": "Hata: Bu cihazda kamera yok",
+      "unknown": "Hata: {0}"
+    }
+  },
+  "colorPicker": {
+    "pickColor": "Bir renk seç",
+    "sendButtonText": "Gönder"
+  },
+  "datePicker": {
+    "pickDate": "Bir tarih seçin",
+    "sendButtonText": "\"{0}\" gönder"
+  },
+  "timePicker": {
+    "pickTime": "Bir zaman seçin",
+    "sendButtonText": "\"{0}\" gönder"
+  }
+}

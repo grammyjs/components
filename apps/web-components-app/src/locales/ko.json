@@ -1,0 +1,23 @@
+{
+  "qrScanner": {
+    "pointCamera": "QR 코드에서 카메라 포인트",
+    "sendButtonText": "보내다",
+    "errors": {
+      "notAllowed": "오류: 카메라에 대한 액세스를 허용해야 합니다.",
+      "notFound": "오류: 이 장치에 카메라가 없습니다.",
+      "unknown": "오류: {0}"
+    }
+  },
+  "colorPicker": {
+    "pickColor": "색을 고르세요",
+    "sendButtonText": "보내다"
+  },
+  "datePicker": {
+    "pickDate": "날짜 선택",
+    "sendButtonText": "\"{0}\" 보내기"
+  },
+  "timePicker": {
+    "pickTime": "시간 선택",
+    "sendButtonText": "\"{0}\" 보내기"
+  }
+}

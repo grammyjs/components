@@ -1,0 +1,23 @@
+{
+  "qrScanner": {
+    "pointCamera": "Arahkan kamera ke kode QR",
+    "sendButtonText": "Kirim",
+    "errors": {
+      "notAllowed": "Kesalahan: Anda harus mengizinkan akses ke kamera",
+      "notFound": "Kesalahan: Tidak ada kamera di perangkat ini",
+      "unknown": "Kesalahan: {0}"
+    }
+  },
+  "colorPicker": {
+    "pickColor": "Pilih warna",
+    "sendButtonText": "Kirim"
+  },
+  "datePicker": {
+    "pickDate": "Pilih tanggal",
+    "sendButtonText": "Kirim \"{0}\""
+  },
+  "timePicker": {
+    "pickTime": "Pilih waktu",
+    "sendButtonText": "Kirim \"{0}\""
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "qrScanner": {
+    "pointCamera": "Diriger la caméra vers le code QR",
+    "sendButtonText": "Envoyer",
+    "errors": {
+      "notAllowed": "Erreur: Vous devez autoriser l'accès à la caméra",
+      "notFound": "Erreur: Aucune caméra sur cet appareil",
+      "unknown": "Erreur: {0}"
+    }
+  },
+  "colorPicker": {
+    "pickColor": "Choisis une couleur",
+    "sendButtonText": "Envoyer"
+  },
+  "datePicker": {
+    "pickDate": "Choisis une date",
+    "sendButtonText": "Envoyer \"{0}\""
+  },
+  "timePicker": {
+    "pickTime": "Choisissez une heure",
+    "sendButtonText": "Envoyer \"{0}\""
+  }
+}

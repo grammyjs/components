@@ -1,0 +1,23 @@
+{
+  "qrScanner": {
+    "pointCamera": "Kamera auf QR-Code richten",
+    "sendButtonText": "Schicken",
+    "errors": {
+      "notAllowed": "Fehler: Sie müssen den Zugriff auf die Kamera erlauben",
+      "notFound": "Fehler: Keine Kamera auf diesem Gerät",
+      "unknown": "Fehler: {0}"
+    }
+  },
+  "colorPicker": {
+    "pickColor": "Wähle eine Farbe",
+    "sendButtonText": "Schicken"
+  },
+  "datePicker": {
+    "pickDate": "Wähle ein Datum",
+    "sendButtonText": "Senden Sie \"{0}\""
+  },
+  "timePicker": {
+    "pickTime": "Wählen Sie eine Zeit aus",
+    "sendButtonText": "Senden Sie \"{0}\""
+  }
+}

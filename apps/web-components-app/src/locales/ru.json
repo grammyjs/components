@@ -1,0 +1,23 @@
+{
+  "qrScanner": {
+    "pointCamera": "Наведите камеру на QR-код",
+    "sendButtonText": "Отправить",
+    "errors": {
+      "notAllowed": "Ошибка: Вы должны разрешить доступ к камере",
+      "notFound": "Ошибка: На этом устройстве нет камеры",
+      "unknown": "Ошибка: {0}"
+    }
+  },
+  "colorPicker": {
+    "pickColor": "Выберите цвет",
+    "sendButtonText": "Отправить"
+  },
+  "datePicker": {
+    "pickDate": "Выберите дату",
+    "sendButtonText": "Отправить \"{0}\""
+  },
+  "timePicker": {
+    "pickTime": "Выберите время",
+    "sendButtonText": "Отправить \"{0}\""
+  }
+}
