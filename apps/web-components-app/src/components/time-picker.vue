@@ -23,7 +23,7 @@ export default defineComponent({
       sendResult<TimePickerResult>({
         type: 'time',
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        value: result.value
+        time: result.value
       }, {
         callback: props.callback,
       });

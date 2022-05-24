@@ -25,7 +25,7 @@ export default defineComponent({
     const onSave = () =>
       sendResult<DatePickerResult>({
         type: 'date',
-        value: result.value
+        date: result.value
       }, {
         callback: props.callback,
       });
