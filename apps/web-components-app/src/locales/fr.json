@@ -1,6 +1,6 @@
 {
   "qrScanner": {
-    "pointCamera": "Diriger la caméra vers le code QR",
+    "pointCamera": "Dirigez la caméra vers le code QR",
     "sendButtonText": "Envoyer",
     "errors": {
       "notAllowed": "Erreur: Vous devez autoriser l'accès à la caméra",
@@ -9,11 +9,11 @@
     }
   },
   "colorPicker": {
-    "pickColor": "Choisis une couleur",
+    "pickColor": "Choisissez une couleur",
     "sendButtonText": "Envoyer"
   },
   "datePicker": {
-    "pickDate": "Choisis une date",
+    "pickDate": "Choisissez une date",
     "sendButtonText": "Envoyer \"{0}\""
   },
   "timePicker": {
