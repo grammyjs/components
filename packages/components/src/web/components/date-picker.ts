@@ -16,11 +16,11 @@ export type DatePickerProps = WebAppComponentProps;
 export type DatePickerConfig = WebAppComponentConfig;
 
 export type DatePickerResult = WebAppComponentResult<"date"> & {
-  value: string;
+  date: string;
 };
 
 export type DatePickerTransformedResult = WebAppComponentResult<"date"> & {
-  value: Date;
+  date: Date;
 };
 
 export type DatePickerCallbackResult = WebAppComponentCallbackResult<
@@ -45,10 +45,10 @@ export class DatePicker<
     super(props, Object.assign(defaultConfig, config));
   }
 
-  static transform({ value }: DatePickerResult): DatePickerTransformedResult {
+  static transform({ date }: DatePickerResult): DatePickerTransformedResult {
     return {
       type: "date",
-      value: new Date(value),
+      date: new Date(date),
     };
   }
 

@@ -17,12 +17,12 @@ export type TimePickerConfig = WebAppComponentConfig;
 
 export type TimePickerResult = WebAppComponentResult<"time"> & {
   timeZone: string;
-  value: string;
+  time: string;
 };
 
 export type TimePickerTransformedResult = WebAppComponentResult<"time"> & {
   timeZone: string;
-  value: Date;
+  time: Date;
 };
 
 export type TimePickerCallbackResult = WebAppComponentCallbackResult<
@@ -48,12 +48,12 @@ export class TimePicker<
   }
 
   static transform({
-    value,
+    time,
     timeZone,
   }: TimePickerResult): TimePickerTransformedResult {
     return {
       type: "time",
-      value: new Date(`1970-01-01T${value}:00Z`),
+      time: new Date(`1970-01-01T${time}:00Z`),
       timeZone,
     };
   }
