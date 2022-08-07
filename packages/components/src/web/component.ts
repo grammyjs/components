@@ -3,49 +3,39 @@ import { WebAppInitData } from "./telegram-types.ts";
 
 const { URLSearchParams } = url;
 
-export interface WebAppComponentProps {
-  lang?: string;
+export type WebAppComponentProps = {
+  language?: string;
   callback?: string;
-}
+};
 
-export interface WebAppComponentConfig {
+export type WebAppComponentConfig = {
   baseUrl?: string;
   path?: string;
-}
+};
 
-export interface WebAppComponentResult<T extends string> {
+export type WebAppComponentResult<T extends string> = {
   type: T;
-}
+};
 
-export interface WebAppComponentCallbackResult<
+export type WebAppComponentCallbackResult<
   T extends string,
   D extends WebAppComponentResult<T>
-> {
+> = {
   initData: string;
   initDataUnsafe: WebAppInitData;
   data: D;
-}
+};
 
 export class WebAppComponent<
   TProps extends WebAppComponentProps = WebAppComponentProps,
   TConfig extends WebAppComponentConfig = WebAppComponentConfig
 > {
-  #props: TProps;
-  #config: TConfig;
-  url: string;
+  readonly props: TProps;
+  readonly config: TConfig;
 
   constructor(props?: TProps, config?: TConfig) {
-    this.#props = Object.assign({}, props);
-    this.#config = Object.assign({}, config);
-    this.url = this.build();
-  }
-
-  get props(): TProps {
-    return this.#props;
-  }
-
-  get config(): TConfig {
-    return this.#config;
+    this.props = Object.assign({}, props);
+    this.config = Object.assign({}, config);
   }
 
   clone(): this {
@@ -58,13 +48,20 @@ export class WebAppComponent<
     key: TKey,
     value: TProps[TKey]
   ): this {
-    this.#props[key] = value;
-    this.url = this.build();
+    this.props[key] = value;
 
     return this;
   }
 
-  buildKeyboardButton(text: string): types.KeyboardButton {
+  setLanguage(value: TProps["language"]) {
+    return this.setProp("language", value);
+  }
+
+  setCallback(value: TProps["callback"]) {
+    return this.setProp("callback", value);
+  }
+
+  button(text: string): types.KeyboardButton {
     return {
       text,
       web_app: {
@@ -73,8 +70,8 @@ export class WebAppComponent<
     };
   }
 
-  buildInlineKeyboardButton(text: string): types.InlineKeyboardButton {
-    if (typeof this.#props.callback !== "string") {
+  inlineButton(text: string): types.InlineKeyboardButton {
+    if (typeof this.props.callback !== "string") {
       throw new Error("Callback property must be set for inline buttons");
     }
 
@@ -89,10 +86,10 @@ export class WebAppComponent<
   build(): string {
     const params = new URLSearchParams();
 
-    for (const [key, value] of Object.entries(this.#props)) {
+    for (const [key, value] of Object.entries(this.props)) {
       params.set(key, value.toString());
     }
 
-    return `${this.#config.baseUrl}/${this.#config.path}?${params}`;
+    return `${this.config.baseUrl}/${this.config.path}?${params}`;
   }
 }

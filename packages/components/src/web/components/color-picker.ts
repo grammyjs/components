@@ -66,6 +66,10 @@ export class ColorPicker<
     super(props, Object.assign(defaultConfig, config));
   }
 
+  setSendButtonText(value: ColorPickerProps["sendButtonText"]) {
+    return this.setProp("sendButtonText", value);
+  }
+
   static transform(data: ColorPickerResult): ColorPickerTransformedResult {
     return data;
   }
