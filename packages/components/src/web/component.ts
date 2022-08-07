@@ -3,32 +3,32 @@ import { WebAppInitData } from "./telegram-types.ts";
 
 const { URLSearchParams } = url;
 
-export type WebAppComponentProps = {
-  language?: string;
-  callback?: string;
-};
+// deno-lint-ignore no-namespace
+export namespace WebAppComponent {
+  export type Props = {
+    language?: string;
+    callback?: string;
+  };
 
-export type WebAppComponentConfig = {
-  baseUrl?: string;
-  path?: string;
-};
+  export type Config = {
+    baseUrl?: string;
+    path?: string;
+  };
 
-export type WebAppComponentResult<T extends string> = {
-  type: T;
-};
+  export type Result<T extends string> = {
+    type: T;
+  };
 
-export type WebAppComponentCallbackResult<
-  T extends string,
-  D extends WebAppComponentResult<T>
-> = {
-  initData: string;
-  initDataUnsafe: WebAppInitData;
-  data: D;
-};
+  export type CallbackResult<T extends string, D extends Result<T>> = {
+    initData: string;
+    initDataUnsafe: WebAppInitData;
+    data: D;
+  };
+}
 
 export class WebAppComponent<
-  TProps extends WebAppComponentProps = WebAppComponentProps,
-  TConfig extends WebAppComponentConfig = WebAppComponentConfig
+  TProps extends WebAppComponent.Props = WebAppComponent.Props,
+  TConfig extends WebAppComponent.Config = WebAppComponent.Config,
 > {
   readonly props: TProps;
   readonly config: TConfig;
@@ -46,7 +46,7 @@ export class WebAppComponent<
 
   setProp<TKey extends keyof TProps = keyof TProps>(
     key: TKey,
-    value: TProps[TKey]
+    value: TProps[TKey],
   ): this {
     this.props[key] = value;
 

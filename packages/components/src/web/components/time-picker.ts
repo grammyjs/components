@@ -1,45 +1,38 @@
 import { grammy } from "../../deps.deno.ts";
-import {
-  WebAppComponent,
-  WebAppComponentConfig,
-  WebAppComponentProps,
-  WebAppComponentResult,
-  WebAppComponentCallbackResult,
-} from "../component.ts";
+import { WebAppComponent } from "../component.ts";
 import { BASE_URL } from "../config.ts";
 import { WebAppDataFlavor } from "../context.ts";
 import { matchWebAppData } from "../filter.ts";
 import { MaybePromise } from "../types.ts";
 
-export type TimePickerProps = WebAppComponentProps;
+// deno-lint-ignore no-namespace
+export namespace TimePicker {
+  export type Props = WebAppComponent.Props;
 
-export type TimePickerConfig = WebAppComponentConfig;
+  export type Config = WebAppComponent.Config;
 
-export type TimePickerResult = WebAppComponentResult<"time"> & {
-  timeZone: string;
-  time: string;
-};
+  export type Result = WebAppComponent.Result<"time"> & {
+    timeZone: string;
+    time: string;
+  };
 
-export type TimePickerTransformedResult = WebAppComponentResult<"time"> & {
-  timeZone: string;
-  time: Date;
-};
+  export type TransformedResult = WebAppComponent.Result<"time"> & {
+    timeZone: string;
+    utcTime: Date;
+    time: Date;
+  };
 
-export type TimePickerCallbackResult = WebAppComponentCallbackResult<
-  "time",
-  TimePickerResult
->;
+  export type CallbackResult = WebAppComponent.CallbackResult<"time", Result>;
 
-export type TimePickerContext = Required<
-  WebAppDataFlavor<TimePickerResult, TimePickerTransformedResult>
->;
+  export type Context = Required<WebAppDataFlavor<Result, TransformedResult>>;
+}
 
-export class TimePicker<
-  TProps extends TimePickerProps,
-  TConfig extends WebAppComponentConfig
-> extends WebAppComponent<TProps, TConfig> {
-  constructor(props?: TProps, config?: TConfig) {
-    const defaultConfig: WebAppComponentConfig = {
+export class TimePicker extends WebAppComponent<
+  TimePicker.Props,
+  TimePicker.Config
+> {
+  constructor(props?: TimePicker.Props, config?: TimePicker.Config) {
+    const defaultConfig: WebAppComponent.Config = {
       baseUrl: BASE_URL,
       path: "time-picker",
     };
@@ -50,9 +43,14 @@ export class TimePicker<
   static transform({
     time,
     timeZone,
-  }: TimePickerResult): TimePickerTransformedResult {
+  }: TimePicker.Result): TimePicker.TransformedResult {
     return {
       type: "time",
+      utcTime: new Date(
+        new Date(`1970-01-01T${time}:00Z`).toLocaleString("en-US", {
+          timeZone,
+        }),
+      ),
       time: new Date(`1970-01-01T${time}:00Z`),
       timeZone,
     };
@@ -60,14 +58,14 @@ export class TimePicker<
 
   static match<
     TContext extends grammy.Context & WebAppDataFlavor,
-    TTimePickerContext extends TContext & TimePickerContext
+    TTimePickerContext extends TContext & TimePicker.Context
   >(
     filter: (ctx: TTimePickerContext) => MaybePromise<boolean> = () => true
   ): (ctx: TContext) => MaybePromise<boolean> {
     const matchComponent = matchWebAppData<
       TContext,
-      TimePickerResult,
-      TimePickerTransformedResult
+      TimePicker.Result,
+      TimePicker.TransformedResult
     >((ctx) => ctx.webAppDataRaw.type === "time", {
       transform: this.transform,
     });
