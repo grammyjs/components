@@ -2,8 +2,6 @@ import { grammy } from "../../deps.deno.ts";
 import { WebAppComponent } from "../component.ts";
 import { BASE_URL } from "../config.ts";
 import { WebAppDataFlavor } from "../context.ts";
-import { matchWebAppData } from "../filter.ts";
-import { MaybePromise } from "../types.ts";
 
 // deno-lint-ignore no-namespace
 export namespace DatePicker {
@@ -44,23 +42,12 @@ export class DatePicker extends WebAppComponent<
     };
   }
 
-  static match<
-    TContext extends grammy.Context & WebAppDataFlavor,
-    TDatePickerContext extends TContext & DatePicker.Context
-  >(
-    filter: (ctx: TDatePickerContext) => MaybePromise<boolean> = () => true
-  ): (ctx: TContext) => MaybePromise<boolean> {
-    const matchComponent = matchWebAppData<
-      TContext,
-      DatePicker.Result,
-      DatePicker.TransformedResult
-    >((ctx) => ctx.webAppDataRaw.type === "date", {
-      transform: this.transform,
-    });
-
-    return (ctx) =>
-      Promise.resolve(matchComponent(ctx)).then((matched) =>
-        matched ? filter(ctx as TDatePickerContext) : false
-      );
+  static match<C extends grammy.Context & WebAppDataFlavor>(
+    filter: (ctx: C & DatePicker.Context) => boolean = () => true,
+  ) {
+    return (ctx: C): ctx is C & DatePicker.Context =>
+      ctx.webAppDataRaw?.type === "date" &&
+      ctx.webAppData?.type === "date" &&
+      filter(ctx as C & DatePicker.Context);
   }
 }
