@@ -2,8 +2,6 @@ import { grammy } from "../../deps.deno.ts";
 import { WebAppComponent } from "../component.ts";
 import { BASE_URL } from "../config.ts";
 import { WebAppDataFlavor } from "../context.ts";
-import { matchWebAppData } from "../filter.ts";
-import { MaybePromise } from "../types.ts";
 
 // deno-lint-ignore no-namespace
 export namespace QrScanner {
@@ -45,23 +43,12 @@ export class QrScanner extends WebAppComponent<
     return data;
   }
 
-  static match<
-    TContext extends grammy.Context & WebAppDataFlavor,
-    TQrScannerContext extends TContext & QrScanner.Context
-  >(
-    filter: (ctx: TQrScannerContext) => MaybePromise<boolean> = () => true
-  ): (ctx: TContext) => MaybePromise<boolean> {
-    const matchComponent = matchWebAppData<
-      TContext,
-      QrScanner.Result,
-      QrScanner.TransformedResult
-    >((ctx) => ctx.webAppDataRaw.type === "qr", {
-      transform: this.transform,
-    });
-
-    return (ctx) =>
-      Promise.resolve(matchComponent(ctx)).then((matched) =>
-        matched ? filter(ctx as TQrScannerContext) : false
-      );
+  static match<C extends grammy.Context & WebAppDataFlavor>(
+    filter: (ctx: C & QrScanner.Context) => boolean = () => true,
+  ) {
+    return (ctx: C): ctx is C & QrScanner.Context =>
+      ctx.webAppDataRaw?.type === "qr" &&
+      ctx.webAppData?.type === "qr" &&
+      filter(ctx as C & QrScanner.Context);
   }
 }

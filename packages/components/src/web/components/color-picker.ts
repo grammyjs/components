@@ -2,8 +2,6 @@ import { grammy } from "../../deps.deno.ts";
 import { WebAppComponent } from "../component.ts";
 import { BASE_URL } from "../config.ts";
 import { WebAppDataFlavor } from "../context.ts";
-import { matchWebAppData } from "../filter.ts";
-import { MaybePromise } from "../types.ts";
 
 // deno-lint-ignore no-namespace
 export namespace ColorPicker {
@@ -66,23 +64,12 @@ export class ColorPicker extends WebAppComponent<
     return data;
   }
 
-  static match<
-    TContext extends grammy.Context & WebAppDataFlavor,
-    TColorPickerContext extends TContext & ColorPicker.Context
-  >(
-    filter: (ctx: TColorPickerContext) => MaybePromise<boolean> = () => true
-  ): (ctx: TContext) => MaybePromise<boolean> {
-    const matchComponent = matchWebAppData<
-      TContext,
-      ColorPicker.Result,
-      ColorPicker.TransformedResult
-    >((ctx) => ctx.webAppDataRaw.type === "color", {
-      transform: this.transform,
-    });
-
-    return (ctx) =>
-      Promise.resolve(matchComponent(ctx)).then((matched) =>
-        matched ? filter(ctx as TColorPickerContext) : false
-      );
+  static match<C extends grammy.Context & WebAppDataFlavor>(
+    filter: (ctx: C & ColorPicker.Context) => boolean = () => true,
+  ) {
+    return (ctx: C): ctx is C & ColorPicker.Context =>
+      ctx.webAppDataRaw?.type === "color" &&
+      ctx.webAppData?.type === "color" &&
+      filter(ctx as C & ColorPicker.Context);
   }
 }

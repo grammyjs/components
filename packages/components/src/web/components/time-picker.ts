@@ -2,8 +2,6 @@ import { grammy } from "../../deps.deno.ts";
 import { WebAppComponent } from "../component.ts";
 import { BASE_URL } from "../config.ts";
 import { WebAppDataFlavor } from "../context.ts";
-import { matchWebAppData } from "../filter.ts";
-import { MaybePromise } from "../types.ts";
 
 // deno-lint-ignore no-namespace
 export namespace TimePicker {
@@ -56,23 +54,12 @@ export class TimePicker extends WebAppComponent<
     };
   }
 
-  static match<
-    TContext extends grammy.Context & WebAppDataFlavor,
-    TTimePickerContext extends TContext & TimePicker.Context
-  >(
-    filter: (ctx: TTimePickerContext) => MaybePromise<boolean> = () => true
-  ): (ctx: TContext) => MaybePromise<boolean> {
-    const matchComponent = matchWebAppData<
-      TContext,
-      TimePicker.Result,
-      TimePicker.TransformedResult
-    >((ctx) => ctx.webAppDataRaw.type === "time", {
-      transform: this.transform,
-    });
-
-    return (ctx) =>
-      Promise.resolve(matchComponent(ctx)).then((matched) =>
-        matched ? filter(ctx as TTimePickerContext) : false
-      );
+  static match<C extends grammy.Context & WebAppDataFlavor>(
+    filter: (ctx: C & TimePicker.Context) => boolean = () => true,
+  ) {
+    return (ctx: C): ctx is C & TimePicker.Context =>
+      ctx.webAppDataRaw?.type === "time" &&
+      ctx.webAppData?.type === "time" &&
+      filter(ctx as C & TimePicker.Context);
   }
 }
