@@ -45,6 +45,10 @@ export class QrScanner<
     super(props, Object.assign(defaultConfig, config));
   }
 
+  setSendButtonText(value: QrScannerProps["sendButtonText"]) {
+    return this.setProp("sendButtonText", value);
+  }
+
   static transform(data: QrScannerResult): QrScannerTransformedResult {
     return data;
   }
