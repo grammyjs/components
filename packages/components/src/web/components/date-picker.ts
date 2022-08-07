@@ -1,43 +1,35 @@
 import { grammy } from "../../deps.deno.ts";
-import {
-  WebAppComponent,
-  WebAppComponentConfig,
-  WebAppComponentProps,
-  WebAppComponentResult,
-  WebAppComponentCallbackResult,
-} from "../component.ts";
+import { WebAppComponent } from "../component.ts";
 import { BASE_URL } from "../config.ts";
 import { WebAppDataFlavor } from "../context.ts";
 import { matchWebAppData } from "../filter.ts";
 import { MaybePromise } from "../types.ts";
 
-export type DatePickerProps = WebAppComponentProps;
+// deno-lint-ignore no-namespace
+export namespace DatePicker {
+  export type Props = WebAppComponent.Props;
 
-export type DatePickerConfig = WebAppComponentConfig;
+  export type Config = WebAppComponent.Config;
 
-export type DatePickerResult = WebAppComponentResult<"date"> & {
-  date: string;
-};
+  export type Result = WebAppComponent.Result<"date"> & {
+    date: string;
+  };
 
-export type DatePickerTransformedResult = WebAppComponentResult<"date"> & {
-  date: Date;
-};
+  export type TransformedResult = WebAppComponent.Result<"date"> & {
+    date: Date;
+  };
 
-export type DatePickerCallbackResult = WebAppComponentCallbackResult<
-  "date",
-  DatePickerResult
->;
+  export type CallbackResult = WebAppComponent.CallbackResult<"date", Result>;
 
-export type DatePickerContext = Required<
-  WebAppDataFlavor<DatePickerResult, DatePickerTransformedResult>
->;
+  export type Context = Required<WebAppDataFlavor<Result, TransformedResult>>;
+}
 
-export class DatePicker<
-  TProps extends DatePickerProps,
-  TConfig extends WebAppComponentConfig
-> extends WebAppComponent<TProps, TConfig> {
-  constructor(props?: TProps, config?: TConfig) {
-    const defaultConfig: WebAppComponentConfig = {
+export class DatePicker extends WebAppComponent<
+  DatePicker.Props,
+  DatePicker.Config
+> {
+  constructor(props?: DatePicker.Props, config?: DatePicker.Config) {
+    const defaultConfig: WebAppComponent.Config = {
       baseUrl: BASE_URL,
       path: "date-picker",
     };
@@ -45,7 +37,7 @@ export class DatePicker<
     super(props, Object.assign(defaultConfig, config));
   }
 
-  static transform({ date }: DatePickerResult): DatePickerTransformedResult {
+  static transform({ date }: DatePicker.Result): DatePicker.TransformedResult {
     return {
       type: "date",
       date: new Date(date),
@@ -54,14 +46,14 @@ export class DatePicker<
 
   static match<
     TContext extends grammy.Context & WebAppDataFlavor,
-    TDatePickerContext extends TContext & DatePickerContext
+    TDatePickerContext extends TContext & DatePicker.Context
   >(
     filter: (ctx: TDatePickerContext) => MaybePromise<boolean> = () => true
   ): (ctx: TContext) => MaybePromise<boolean> {
     const matchComponent = matchWebAppData<
       TContext,
-      DatePickerResult,
-      DatePickerTransformedResult
+      DatePicker.Result,
+      DatePicker.TransformedResult
     >((ctx) => ctx.webAppDataRaw.type === "date", {
       transform: this.transform,
     });

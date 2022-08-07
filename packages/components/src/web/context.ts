@@ -1,31 +1,19 @@
-import {
-  ColorPickerResult,
-  ColorPickerTransformedResult,
-} from "./components/color-picker.ts";
-import {
-  DatePickerResult,
-  DatePickerTransformedResult,
-} from "./components/date-picker.ts";
-import {
-  QrScannerResult,
-  QrScannerTransformedResult,
-} from "./components/qr-scanner.ts";
-import {
-  TimePickerResult,
-  TimePickerTransformedResult,
-} from "./components/time-picker.ts";
+import { ColorPicker } from "./components/color-picker.ts";
+import { DatePicker } from "./components/date-picker.ts";
+import { QrScanner } from "./components/qr-scanner.ts";
+import { TimePicker } from "./components/time-picker.ts";
 
 export type WebAppRawData =
-  | QrScannerResult
-  | DatePickerResult
-  | TimePickerResult
-  | ColorPickerResult;
+  | QrScanner.Result
+  | DatePicker.Result
+  | TimePicker.Result
+  | ColorPicker.Result;
 
 export type WebAppData =
-  | QrScannerTransformedResult
-  | DatePickerTransformedResult
-  | TimePickerTransformedResult
-  | ColorPickerTransformedResult;
+  | QrScanner.TransformedResult
+  | DatePicker.TransformedResult
+  | TimePicker.TransformedResult
+  | ColorPicker.TransformedResult;
 
 export interface WebAppDataFlavor<
   TRawData = WebAppRawData,
