@@ -1,4 +1,4 @@
-import WebApp from "@grammyjs/web-app";
+import { WebApp } from "@grammyjs/web-app";
 
 interface Options {
   callback?: string;

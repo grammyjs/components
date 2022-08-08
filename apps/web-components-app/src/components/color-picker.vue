@@ -7,21 +7,23 @@
 </template>
 
 <script lang="ts">
-import WebApp from "@grammyjs/web-app";
-import type { ColorPickerProps, ColorPickerResult } from "grammy-components";
+import { WebApp } from "@grammyjs/web-app";
+import type { ColorPicker } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";
 import { getViewport } from "@/helpers/viewport";
 import { getBrowserName } from "@/helpers/detect-browser";
 
-const props: Array<keyof ColorPickerProps> = [
+const props: Array<keyof ColorPicker.Props> = [
     'callback',
     'sendButtonText'
 ]
 
 export default defineComponent({
     props,
-    setup(props, ctx) {
-        const $vuetify = ctx.root.$vuetify
+    setup(props) {
+        const instance = getCurrentInstance()!.proxy;
+
+        const $vuetify = instance.$vuetify;
 
         const result = ref({
             alpha: 1,
@@ -50,14 +52,14 @@ export default defineComponent({
         };
 
         const onSave = () =>
-            sendResult<ColorPickerResult>({
+            sendResult<ColorPicker.Result>({
                 type: 'color',
                 ...result.value
             }, {
                 callback: props.callback,
             });
 
-        watch(result, async (value, oldValue) => {
+        watch(result, async (value) => {
             const { r, g, b } = value.rgba;
             // https://en.wikipedia.org/wiki/Luma_%28video%29
             const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
@@ -92,12 +94,12 @@ export default defineComponent({
 
         onMounted(() => {
             WebApp.onEvent("mainButtonClicked", onSave);
-            WebApp.onEvent("viewportChanged", onViewportUpdate);
+            WebApp.onEvent("viewPortChanged", onViewportUpdate);
         });
 
         onBeforeUnmount(() => {
             WebApp.offEvent("mainButtonClicked", onSave);
-            WebApp.offEvent("viewportChanged", onViewportUpdate);
+            WebApp.offEvent("viewPortChanged", onViewportUpdate);
         });
 
         return {

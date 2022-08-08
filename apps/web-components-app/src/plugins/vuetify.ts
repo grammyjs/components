@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuetify from "vuetify/lib/framework";
+import Vuetify from "vuetify/lib";
 import type VuetifyFramework from "vuetify";
 
 import * as locales from "@/locales";

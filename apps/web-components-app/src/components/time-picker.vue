@@ -5,22 +5,24 @@
 </template>
 
 <script lang="ts">
-import WebApp from "@grammyjs/web-app";
-import type { TimePickerProps, TimePickerResult } from "grammy-components";
+import { WebApp } from "@grammyjs/web-app";
+import type { TimePicker } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";
 
-const props: Array<keyof TimePickerProps> = ["callback"];
+const props: Array<keyof TimePicker.Props> = ["callback"];
 
 export default defineComponent({
   props,
-  setup(props, ctx) {
-    const $vuetify = ctx.root.$vuetify;
+  setup(props) {
+    const instance = getCurrentInstance()!.proxy;
+
+    const $vuetify = instance.$vuetify;
 
     const primaryColor = ref(WebApp.themeParams.button_color);
     const result = ref();
 
     const onSave = () =>
-      sendResult<TimePickerResult>({
+      sendResult<TimePicker.Result>({
         type: 'time',
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         time: result.value
@@ -28,16 +30,9 @@ export default defineComponent({
         callback: props.callback,
       });
 
-    watch(result, async (value, oldValue) => {
-      const time = new Date(`1970-01-01T${result.value}:00Z`).toLocaleTimeString($vuetify.lang.current, {
-        hour: '2-digit',
-        minute: '2-digit',
-        timeZone: 'UTC',
-        hour12: false
-      })
-
+    watch(result, async () => {
       WebApp.MainButton.setParams({
-        text: $vuetify.lang.t("$vuetify.timePicker.sendButtonText", time),
+        text: $vuetify.lang.t("$vuetify.timePicker.sendButtonText", result.value),
         color: WebApp.themeParams.button_color,
         is_active: true,
         is_visible: true,
