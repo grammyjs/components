@@ -6,31 +6,33 @@
 </template>
 
 <script lang="ts">
-import WebApp from "@grammyjs/web-app";
+import { WebApp } from "@grammyjs/web-app";
 import getStartOfWeek from 'start-of-week'
-import type { DatePickerProps, DatePickerResult } from "grammy-components";
+import type { DatePicker } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";
 
-const props: Array<keyof DatePickerProps> = ["callback"];
+const props: Array<keyof DatePicker.Props> = ["callback"];
 
 export default defineComponent({
   props,
-  setup(props, ctx) {
-    const $vuetify = ctx.root.$vuetify;
+  setup(props) {
+    const instance = getCurrentInstance()!.proxy;
+
+    const $vuetify = instance.$vuetify;
 
     const primaryColor = ref(WebApp.themeParams.button_color);
     const startOfWeek = ref(getStartOfWeek($vuetify.lang.current))
     const result = ref();
 
     const onSave = () =>
-      sendResult<DatePickerResult>({
+      sendResult<DatePicker.Result>({
         type: 'date',
         date: result.value
       }, {
         callback: props.callback,
       });
 
-    watch(result, async (value, oldValue) => {
+    watch(result, async () => {
       const date = new Date(result.value).toLocaleDateString($vuetify.lang.current)
 
       WebApp.MainButton.setParams({

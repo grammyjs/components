@@ -15,12 +15,12 @@
 </template>
 
 <script lang="ts">
-import WebApp from "@grammyjs/web-app";
+import { WebApp } from "@grammyjs/web-app";
 import { QrcodeStream } from 'vue-qrcode-reader'
-import type { QrScannerProps, QrScannerResult } from "grammy-components";
+import type { QrScanner } from "grammy-components";
 import { sendResult } from "@/helpers/telegram";
 
-const props: Array<keyof QrScannerProps> = [
+const props: Array<keyof QrScanner.Props> = [
     'callback',
     'sendButtonText'
 ]
@@ -30,8 +30,10 @@ export default defineComponent({
         QrcodeStream
     },
     props,
-    setup(props, ctx) {
-        const $vuetify = ctx.root.$vuetify
+    setup(props) {
+        const instance = getCurrentInstance()!.proxy;
+
+        const $vuetify = instance.$vuetify;
 
         const loading = ref(true);
         const result = ref();
@@ -91,14 +93,14 @@ export default defineComponent({
             }
         };
 
-        const onSave = () => sendResult<QrScannerResult>({
+        const onSave = () => sendResult<QrScanner.Result>({
             type: 'qr',
             value: result.value
         }, {
             callback: props.callback
         })
 
-        watch(error, async (value, oldValue) => {
+        watch(error, async (value) => {
             WebApp.MainButton.setParams({
                 text: value.substring(0, 64),
                 color: '#ff0000',
