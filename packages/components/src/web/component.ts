@@ -1,4 +1,4 @@
-import { types, url } from "../deps.deno.ts";
+import { InlineKeyboardButton, KeyboardButton, url } from "../deps.deno.ts";
 import { WebAppInitData } from "./telegram-types.ts";
 
 const { URLSearchParams } = url;
@@ -61,7 +61,7 @@ export class WebAppComponent<
     return this.setProp("callback", value);
   }
 
-  button(text: string): types.KeyboardButton {
+  button(text: string): KeyboardButton {
     return {
       text,
       web_app: {
@@ -70,7 +70,7 @@ export class WebAppComponent<
     };
   }
 
-  inlineButton(text: string): types.InlineKeyboardButton {
+  inlineButton(text: string): InlineKeyboardButton {
     if (typeof this.props.callback !== "string") {
       throw new Error("Callback property must be set for inline buttons");
     }
