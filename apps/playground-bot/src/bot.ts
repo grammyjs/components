@@ -1,30 +1,15 @@
-import { Bot, Context, InlineKeyboard, Keyboard } from "grammy";
+import { Bot, Context as DefaultContext, InlineKeyboard, Keyboard, session, SessionFlavor } from "grammy";
 import {
   WebAppDataFlavor,
   ColorPicker,
   QrScanner,
   DatePicker,
   TimePicker,
+  transformWebAppData,
 } from "grammy-components";
-import { default as fetch } from "node-fetch";
+import { createWebhook, getWebhookEndpoint, getWebhookResults } from "./utils.js";
 
-const createWebhook = async () => {
-  const request = await fetch("https://webhook.site/token", {
-    method: "post",
-  });
-
-  const { uuid: token } = (await request.json()) as { uuid: string };
-
-  await fetch(`https://webhook.site/token/${token}/cors/toggle`, {
-    method: "put",
-  });
-
-  return {
-    token,
-  };
-};
-
-const formatWebAppData = (ctx: MyContext) => {
+const formatWebAppData = (ctx: Context) => {
   const webAppData =
     "<pre>\n" + JSON.stringify(ctx.webAppData!, null, 2) + "</pre>";
   // const webAppDataRaw =
@@ -34,9 +19,12 @@ const formatWebAppData = (ctx: MyContext) => {
 };
 
 // Flavor the context type to include web apps data.
-type MyContext = Context & WebAppDataFlavor;
+type Context = DefaultContext & SessionFlavor<{ webhookToken: string}> & WebAppDataFlavor;
 
-const bot = new Bot<MyContext>(""); // <-- put your authentication token between the ""
+const bot = new Bot<Context>(process.env.BOT_TOKEN as string);
+
+bot.use(session({ initial: () => ({}) }));
+bot.use(transformWebAppData());
 
 bot.command("start", async (ctx) => {
   const keyboard = new Keyboard();
@@ -53,13 +41,17 @@ bot.command("start", async (ctx) => {
     },
   });
 
+  if (typeof ctx.session.webhookToken === 'undefined') {
+    ctx.session.webhookToken = await createWebhook()
+  }
+  const token = ctx.session.webhookToken;
+
   const inlineKeyboard = new InlineKeyboard();
-  const { token } = await createWebhook();
   const config = {
-    callback: `https://webhook.site/${token}`,
+    callback: getWebhookEndpoint(token),
   };
 
-  inlineKeyboard.url("Results »", `https://webhook.site/#!/${token}`).row();
+  inlineKeyboard.url("Results »", getWebhookResults(token)).row();
   inlineKeyboard.webApp("Date Picker", new DatePicker(config).build());
   inlineKeyboard.webApp("Time Picker", new TimePicker(config).build()).row();
   inlineKeyboard.webApp("Color Picker", new ColorPicker(config).build()).row();
