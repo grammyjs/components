@@ -3,8 +3,15 @@
   "version": "0.1.0",
   "private": false,
   "description": "Components for grammY",
+  "type": "module",
   "main": "./dist/mod.js",
   "types": "./dist/mod.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/mod.d.ts",
+      "default": "./dist/mod.js"
+    }
+  },
   "files": [
     "dist",
     "package.json",
@@ -13,6 +20,7 @@
   ],
   "scripts": {
     "prebuild": "rimraf dist",
+    "dev": "nodemon -e ts --watch src --exec \"npm run build\"",
     "build": "deno2node tsconfig.json"
   },
   "repository": {
