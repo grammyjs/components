@@ -21,7 +21,8 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "dev": "nodemon -e ts --watch src --exec \"npm run build\"",
-    "build": "deno2node tsconfig.json"
+    "build": "deno2node tsconfig.json",
+    "format": "deno fmt"
   },
   "repository": {
     "type": "git",

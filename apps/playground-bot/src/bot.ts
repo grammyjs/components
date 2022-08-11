@@ -1,4 +1,11 @@
-import { Bot, Context as DefaultContext, InlineKeyboard, Keyboard, session, SessionFlavor } from "grammy";
+import {
+  Bot,
+  Context as DefaultContext,
+  InlineKeyboard,
+  Keyboard,
+  session,
+  SessionFlavor,
+} from "grammy";
 import {
   WebAppDataFlavor,
   ColorPicker,
@@ -7,7 +14,11 @@ import {
   TimePicker,
   transformWebAppData,
 } from "grammy-components";
-import { createWebhook, getWebhookEndpoint, getWebhookResults } from "./utils.js";
+import {
+  createWebhook,
+  getWebhookEndpoint,
+  getWebhookResults,
+} from "./utils.js";
 
 const formatWebAppData = (ctx: Context) => {
   const webAppData =
@@ -19,7 +30,9 @@ const formatWebAppData = (ctx: Context) => {
 };
 
 // Flavor the context type to include web apps data.
-type Context = DefaultContext & SessionFlavor<{ webhookToken: string}> & WebAppDataFlavor;
+type Context = DefaultContext &
+  SessionFlavor<{ webhookToken: string }> &
+  WebAppDataFlavor;
 
 const bot = new Bot<Context>(process.env.BOT_TOKEN as string);
 
@@ -41,8 +54,8 @@ bot.command("start", async (ctx) => {
     },
   });
 
-  if (typeof ctx.session.webhookToken === 'undefined') {
-    ctx.session.webhookToken = await createWebhook()
+  if (typeof ctx.session.webhookToken === "undefined") {
+    ctx.session.webhookToken = await createWebhook();
   }
   const token = ctx.session.webhookToken;
 

@@ -9,7 +9,8 @@
     "clean": "rimraf dist tsconfig.tsbuildinfo",
     "build": "npm run clean && tsc",
     "dev": "tsc-watch --onSuccess \"npm run start\"",
-    "start": "node dist/bot.js"
+    "start": "node dist/bot.js",
+    "format": "prettier --write \"src/**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "@types/debug": "^4.1.7",
