@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuetify from "vuetify/lib";
 import type VuetifyFramework from "vuetify";
 
-import * as locales from "@/locales";
+import { i18n } from "@/plugins/i18n";
 
 Vue.use(Vuetify);
 
@@ -11,6 +11,6 @@ export default new Vuetify({
     iconfont: "mdiSvg",
   },
   lang: {
-    locales,
+    t: (key, ...params) => i18n.t(key, params) as string,
   },
 }) as VuetifyFramework;

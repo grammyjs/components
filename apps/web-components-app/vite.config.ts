@@ -19,6 +19,17 @@ export default defineConfig({
       dts: "src/components.d.ts",
     }),
   ],
+  css: {
+    preprocessorOptions: {
+      sass: {
+        additionalData: [
+          '@import "vuetify/src/styles/settings/_index"',
+          '@import "./src/styles/variables"',
+          "", // end with newline
+        ].join("\n"),
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),

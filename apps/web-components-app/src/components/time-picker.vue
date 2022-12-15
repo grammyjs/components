@@ -32,7 +32,7 @@ export default defineComponent({
 
     watch(result, async () => {
       WebApp.MainButton.setParams({
-        text: $vuetify.lang.t("$vuetify.timePicker.sendButtonText", result.value),
+        text: $vuetify.lang.t("$vuetify.components.timePicker.sendButtonText", result.value),
         color: WebApp.themeParams.button_color,
         is_active: true,
         is_visible: true,
@@ -42,7 +42,7 @@ export default defineComponent({
     // initialization
     (() => {
       WebApp.MainButton.setParams({
-        text: $vuetify.lang.t("$vuetify.timePicker.pickTime"),
+        text: $vuetify.lang.t("$vuetify.components.timePicker.pickTime"),
         color: WebApp.themeParams.hint_color,
         is_active: false,
         is_visible: true,

@@ -1,10 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 import App from "@/App.vue";
+import { setLanguage } from "@/helpers/set-language";
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
   mode: "history",
   routes: [
     {
@@ -45,3 +47,7 @@ export default new VueRouter({
     },
   ],
 });
+
+router.beforeEach(setLanguage);
+
+export default router;
