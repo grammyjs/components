@@ -1,0 +1,27 @@
+name: web-components-app
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - apps/web-components-app/**
+  pull_request:
+    branches: [main]
+    paths:
+      - apps/web-components-app/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web-components-app
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+      - run: npm i
+      - run: npm run format-check
+      - run: npm run build
