@@ -43,7 +43,7 @@ export default defineComponent({
             result.value = data;
 
             WebApp.MainButton.setParams({
-                text: props.sendButtonText || $vuetify.lang.t('$vuetify.qrScanner.sendButtonText'),
+                text: props.sendButtonText || $vuetify.lang.t('$vuetify.components.qrScanner.sendButtonText'),
                 color: WebApp.themeParams.button_color,
                 is_active: true,
             })
@@ -55,7 +55,7 @@ export default defineComponent({
                 await promise;
 
                 WebApp.MainButton.setParams({
-                    text: $vuetify.lang.t('$vuetify.qrScanner.pointCamera'),
+                    text: $vuetify.lang.t('$vuetify.components.qrScanner.pointCamera'),
                     color: WebApp.themeParams.hint_color,
                     is_active: false,
                     is_visible: true
@@ -65,11 +65,11 @@ export default defineComponent({
                 const { name } = err as Error
 
                 if (name === "NotAllowedError") {
-                    error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.notAllowed');
+                    error.value = $vuetify.lang.t('$vuetify.components.qrScanner.errors.notAllowed');
                 } else if (name === "NotFoundError") {
-                    error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.notFound');
+                    error.value = $vuetify.lang.t('$vuetify.components.qrScanner.errors.notFound');
                 } else {
-                    error.value = $vuetify.lang.t('$vuetify.qrScanner.errors.unknown', name);
+                    error.value = $vuetify.lang.t('$vuetify.components.qrScanner.errors.unknown', name);
                 }
 
                 setTimeout(() => WebApp.close(), 5000)

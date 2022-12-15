@@ -72,7 +72,7 @@ export default defineComponent({
             WebApp.MainButton.setParams({
                 text:
                     props.sendButtonText ||
-                    $vuetify.lang.t("$vuetify.colorPicker.sendButtonText"),
+                    $vuetify.lang.t("$vuetify.components.colorPicker.sendButtonText"),
                 color: result.value.hex,
                 text_color: textColor,
                 is_active: true,
@@ -83,7 +83,7 @@ export default defineComponent({
         // initialization
         (() => {
             WebApp.MainButton.setParams({
-                text: $vuetify.lang.t('$vuetify.colorPicker.pickColor'),
+                text: $vuetify.lang.t('$vuetify.components.colorPicker.pickColor'),
                 color: WebApp.themeParams.hint_color,
                 is_active: false,
                 is_visible: true

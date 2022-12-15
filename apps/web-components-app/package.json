@@ -11,22 +11,21 @@
     "format-check": "prettier --check \"src/**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@grammyjs/web-app": "^1.1.1",
+    "@grammyjs/web-app": "^1.2.0",
     "@types/rtl-detect": "^1.0.0",
-    "@vitejs/plugin-vue2": "^1.1.2",
-    "deepmerge": "^4.2.2",
     "prettier": "latest",
     "rimraf": "latest",
+    "@vitejs/plugin-vue2": "^2.2.0",
     "rtl-detect": "^1.0.4",
-    "sass": "~1.32",
-    "sass-loader": "^13.0.2",
+    "sass": "1.32.13",
     "start-of-week": "^3.8.0",
-    "unplugin-auto-import": "^0.11.1",
-    "unplugin-vue-components": "0.22.0",
-    "vite": "^2.9.7",
-    "vue": "^2.7.8",
+    "unplugin-auto-import": "^0.12.0",
+    "unplugin-vue-components": "0.22.11",
+    "vite": "^4.0.0",
+    "vue": "^2.7.14",
+    "vue-i18n": "^8.28.2",
     "vue-qrcode-reader": "^3.1.0",
-    "vue-router": "^3.5.3",
-    "vuetify": "^2.6.8"
+    "vue-router": "^3.6.5",
+    "vuetify": "^2.6.12"
   }
 }

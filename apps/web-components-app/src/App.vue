@@ -8,21 +8,13 @@
 
 <script lang="ts">
 import { WebApp } from "@grammyjs/web-app";
-import rtlDetect from 'rtl-detect'
 
 const isDarkColorScheme = () => WebApp.colorScheme === 'dark' ? true : false
 
 export default defineComponent({
     setup() {
         const instance = getCurrentInstance()!.proxy;
-
-        const $route = instance.$route
         const $vuetify = instance.$vuetify
-
-        let { language } = $route?.query
-        const currentLang = (Array.isArray(language) ? language[0] : language)
-            || navigator.language
-            || 'en'
 
         const onThemeChanged = () => {
             $vuetify.theme.dark = isDarkColorScheme()
@@ -38,17 +30,9 @@ export default defineComponent({
             // }
         }
 
-        // initialization
-        (() => {
-            // set theme
+        onMounted(() => {
             onThemeChanged()
 
-            // set language
-            $vuetify.lang.current = currentLang.substring(0, 2)
-            $vuetify.rtl = rtlDetect.isRtlLang($vuetify.lang.current) ?? false;
-        })()
-
-        onMounted(() => {
             WebApp.onEvent('themeChanged', onThemeChanged)
         })
 

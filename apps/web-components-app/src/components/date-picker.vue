@@ -36,7 +36,7 @@ export default defineComponent({
       const date = new Date(result.value).toLocaleDateString($vuetify.lang.current)
 
       WebApp.MainButton.setParams({
-        text: $vuetify.lang.t("$vuetify.datePicker.sendButtonText", date),
+        text: $vuetify.lang.t("$vuetify.components.datePicker.sendButtonText", date),
         color: WebApp.themeParams.button_color,
         is_active: true,
         is_visible: true,
@@ -46,7 +46,7 @@ export default defineComponent({
     // initialization
     (() => {
       WebApp.MainButton.setParams({
-        text: $vuetify.lang.t("$vuetify.datePicker.pickDate"),
+        text: $vuetify.lang.t("$vuetify.components.datePicker.pickDate"),
         color: WebApp.themeParams.hint_color,
         is_active: false,
         is_visible: true,
