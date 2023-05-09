@@ -1,0 +1,268 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "ColorPickerConfig": {
+            "properties": {
+                "baseUrl": {
+                    "default": "https://grammy-components.pages.dev",
+                    "description": "Root URL of Web Components App.",
+                    "format": "url",
+                    "type": "string"
+                },
+                "path": {
+                    "default": "color-picker",
+                    "description": "URL path to Web Component.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ColorPickerProps": {
+            "properties": {
+                "callbackUrl": {
+                    "description": "URL to send the result to.\nIf not specified, the result will be sent using [Telegram.WebApp.sendData](https://core.telegram.org/bots/webapps#initializing-web-apps).",
+                    "format": "url",
+                    "type": "string"
+                },
+                "language": {
+                    "description": "Two-letter ISO 639-1 language code, used for interface localization.\nIf not specified, the user's browser language will be used.",
+                    "type": "string"
+                },
+                "sendButton": {
+                    "description": "Controls the main button, which is displayed at the bottom of the Web App in the Telegram interface.",
+                    "properties": {
+                        "hintText": {
+                            "description": "The text to be displayed before color is selected.\nIf not specified, \"Pick a color\" (or equivalent in another language) will be used.",
+                            "type": "string"
+                        },
+                        "submitText": {
+                            "description": "The text to be displayed after color is selected.\nIf not specified, \"Send\" (or equivalent in another language) will be used.",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "hintText",
+                        "submitText"
+                    ],
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "ColorPickerResult": {
+            "properties": {
+                "hex": {
+                    "description": "Color in HEX format.",
+                    "pattern": "^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$",
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "color-picker"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "hex",
+                "type"
+            ],
+            "type": "object"
+        },
+        "DatePickerConfig": {
+            "properties": {
+                "baseUrl": {
+                    "default": "https://grammy-components.pages.dev",
+                    "description": "Root URL of Web Components App.",
+                    "format": "url",
+                    "type": "string"
+                },
+                "path": {
+                    "default": "date-picker",
+                    "description": "URL path to Web Component.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "DatePickerProps": {
+            "properties": {
+                "callbackUrl": {
+                    "description": "URL to send the result to.\nIf not specified, the result will be sent using [Telegram.WebApp.sendData](https://core.telegram.org/bots/webapps#initializing-web-apps).",
+                    "format": "url",
+                    "type": "string"
+                },
+                "language": {
+                    "description": "Two-letter ISO 639-1 language code, used for interface localization.\nIf not specified, the user's browser language will be used.",
+                    "type": "string"
+                },
+                "sendButton": {
+                    "description": "Controls the main button, which is displayed at the bottom of the Web App in the Telegram interface.",
+                    "properties": {
+                        "hintText": {
+                            "description": "The text to be displayed before date is selected.\nIf not specified, \"Pick a date\" (or equivalent in another language) will be used.",
+                            "type": "string"
+                        },
+                        "submitText": {
+                            "description": "The text to be displayed after date is selected.\nIf not specified, \"Send \\\"{date}\\\"\" (or equivalent in another language) will be used.",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "hintText",
+                        "submitText"
+                    ],
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "DatePickerResult": {
+            "properties": {
+                "date": {
+                    "description": "Time in \"YYYY-MM-DDTHH:mm:ss.sssZ\" format.",
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "date-picker"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "date",
+                "type"
+            ],
+            "type": "object"
+        },
+        "QrScannerConfig": {
+            "properties": {
+                "baseUrl": {
+                    "default": "https://grammy-components.pages.dev",
+                    "description": "Root URL of Web Components App.",
+                    "format": "url",
+                    "type": "string"
+                },
+                "path": {
+                    "default": "qr-scanner",
+                    "description": "URL path to Web Component.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "QrScannerProps": {
+            "properties": {
+                "callbackUrl": {
+                    "description": "URL to send the result to.\nIf not specified, the result will be sent using [Telegram.WebApp.sendData](https://core.telegram.org/bots/webapps#initializing-web-apps).",
+                    "format": "url",
+                    "type": "string"
+                },
+                "hintText": {
+                    "description": "The text to be displayed under the 'Scan QR' heading, 0-64 characters.",
+                    "type": "string"
+                },
+                "language": {
+                    "description": "Two-letter ISO 639-1 language code, used for interface localization.\nIf not specified, the user's browser language will be used.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "QrScannerResult": {
+            "properties": {
+                "type": {
+                    "enum": [
+                        "qr-scanner"
+                    ],
+                    "type": "string"
+                },
+                "value": {
+                    "description": "Scan result in text format.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "value"
+            ],
+            "type": "object"
+        },
+        "TimePickerConfig": {
+            "properties": {
+                "baseUrl": {
+                    "default": "https://grammy-components.pages.dev",
+                    "description": "Root URL of Web Components App.",
+                    "format": "url",
+                    "type": "string"
+                },
+                "path": {
+                    "default": "time-picker",
+                    "description": "URL path to Web Component.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "TimePickerProps": {
+            "properties": {
+                "callbackUrl": {
+                    "description": "URL to send the result to.\nIf not specified, the result will be sent using [Telegram.WebApp.sendData](https://core.telegram.org/bots/webapps#initializing-web-apps).",
+                    "format": "url",
+                    "type": "string"
+                },
+                "language": {
+                    "description": "Two-letter ISO 639-1 language code, used for interface localization.\nIf not specified, the user's browser language will be used.",
+                    "type": "string"
+                },
+                "sendButton": {
+                    "description": "Props controls the main button, which is displayed at the bottom of the Web App in the Telegram interface.",
+                    "properties": {
+                        "hintText": {
+                            "description": "The text to be displayed before time is selected.\nIf not specified, \"Pick a time\" (or equivalent in another language) will be used.",
+                            "type": "string"
+                        },
+                        "submitText": {
+                            "description": "The text to be displayed after time is selected.\nIf not specified, \"Send \\\"{time}\\\"\" (or equivalent in another language) will be used.",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "hintText",
+                        "submitText"
+                    ],
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "TimePickerResult": {
+            "properties": {
+                "time": {
+                    "description": "Time in \"YYYY-MM-DDTHH:mm:ss.sssZ\" format.",
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "timezone": {
+                    "description": "Time zone in IANA Time Zone Database format.\nhttps://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "time-picker"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "time",
+                "timezone",
+                "type"
+            ],
+            "type": "object"
+        }
+    }
+}
+

@@ -1,0 +1,25 @@
+{
+  "lock": false,
+  "tasks": {
+    "dev": "deno fmt && deno lint && deno run --watch main.ts",
+    "build": "deno task generate && deno check ./src/mod.ts && deno task build-npm",
+    "build-npm": "deno run --allow-run --allow-net --allow-read --allow-write --allow-env ./scripts/build_npm.ts",
+    "generate": "deno task generate:schema && deno task generate:validators",
+    "generate:schema": "deno run --allow-read --allow-write npm:typescript-json-schema --required './src/types/**/*.ts' '*' -o ./src/schema.json && echo 'Schema generated.'",
+    "generate:validators": "deno run --allow-run --allow-read --allow-write ./scripts/generate_validators.ts && echo 'Validators generated.'"
+  },
+  "fmt": {
+    "files": {
+      "exclude": [
+        "./npm/"
+      ]
+    }
+  },
+  "lint": {
+    "files": {
+      "exclude": [
+        "./npm/"
+      ]
+    }
+  }
+}
