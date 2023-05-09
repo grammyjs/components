@@ -1,0 +1,24 @@
+{
+  "name": "@grammyjs/components",
+  "description": "Components for grammY",
+  "version": "0.0.1",
+  "homepage": "https://github.com/grammyjs/components#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grammyjs/components.git"
+  },
+  "author": "deptyped <deptyped@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/grammyjs/components/issues"
+  },
+  "keywords": [
+    "grammy",
+    "bot",
+    "components",
+    "telegram",
+    "telegram-webapp",
+    "telegram-bot",
+    "telegram-bot-api"
+  ]
+}
