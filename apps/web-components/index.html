@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= productName %>
+  </title>
+
+  <meta charset="utf-8" />
+  <meta name="description" content="<%= productDescription %>" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>" />
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script>
+    window.Telegram && window.Telegram.WebApp.ready();
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: var(--tg-theme-bg-color);
+    }
+
+    .loader {
+      height: var(--tg-viewport-height);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .loader__wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 100vw;
+      height: 100%;
+    }
+
+    .loader__body {
+      height: 100%;
+    }
+
+    .loader__skeleton {
+      -webkit-animation: skeleton-loading 1s linear infinite alternate;
+      animation: skeleton-loading 1s linear infinite alternate;
+      height: 100%;
+      margin: 0 10px;
+      border-radius: 7px;
+    }
+
+    .loader__component {
+      margin-top: 2%;
+      height: 88%;
+    }
+
+    .loader__button {
+      margin-top: 1%;
+      margin-bottom: 1%;
+      height: 8%;
+    }
+
+    @keyframes skeleton-loading {
+      0% {
+        background-color: var(--tg-theme-secondary-bg-color);
+      }
+
+      100% {
+        background-color: var(--tg-theme-bg-color);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loader">
+    <div class="loader__wrapper">
+      <div class="loader__body">
+        <div class="loader__component">
+          <div class="loader__skeleton"></div>
+        </div>
+        <div class="loader__button">
+          <div class="loader__skeleton"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- quasar:entry-point -->
+</body>
+
+</html>
