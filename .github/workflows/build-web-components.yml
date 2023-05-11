@@ -1,27 +1,28 @@
-name: web-components-app
+name: Build apps/web-components
 
 on:
   push:
     branches: [main]
     paths:
-      - apps/web-components-app/**
+      - apps/web-components/**
   pull_request:
     branches: [main]
     paths:
-      - apps/web-components-app/**
+      - apps/web-components/**
 
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: apps/web-components-app
+        working-directory: apps/web-components
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: npm
+          cache-dependency-path: apps/web-components/package-lock.json
       - run: npm i
-      - run: npm run format-check
+      - run: npm run lint
       - run: npm run build
