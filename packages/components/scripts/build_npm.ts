@@ -27,11 +27,11 @@ await build({
       name: "zod",
       version: "^3.0.0",
     },
-    "npm:qs@6.x": {
+    "https://esm.sh/qs@6.x": {
       name: "qs",
       version: "^6.0.0",
     },
-    "npm:devalue@4.x": {
+    "https://esm.sh/devalue@4.x": {
       name: "devalue",
       version: "^4.0.0",
     },
