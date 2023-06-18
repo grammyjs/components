@@ -9,17 +9,13 @@
     "generate:validators": "deno run --allow-run --allow-read --allow-write ./scripts/generate_validators.ts && echo 'Validators generated.'"
   },
   "fmt": {
-    "files": {
-      "exclude": [
-        "./npm/"
-      ]
-    }
+    "exclude": [
+      "./npm/"
+    ]
   },
   "lint": {
-    "files": {
-      "exclude": [
-        "./npm/"
-      ]
-    }
+    "exclude": [
+      "./npm/"
+    ]
   }
 }
