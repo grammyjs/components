@@ -1,14 +1,7 @@
 <template>
   <q-page class="flex flex-center">
-    <q-btn
-      color="primary"
-      :loading="loading"
-      size="xl"
-      padding="xl"
-      :icon="mdiQrcodeScan"
-      round
-      @click="handleOpenScanner"
-    ></q-btn>
+    <q-btn color="primary" :loading="loading" size="xl" padding="xl" :icon="mdiQrcodeScan" round
+      @click="handleOpenScanner"></q-btn>
     <tg-scan-qr :text="props.hintText" />
   </q-page>
 </template>
@@ -26,6 +19,7 @@ import { sendComponentResult } from 'helpers/telegram';
 
 const props = defineProps<{
   hintText?: QrScanner.Props['hintText'];
+  callbackUrl?: QrScanner.Props['callbackUrl'];
 }>();
 
 const loading = ref(false);
@@ -37,7 +31,13 @@ const { onQrTextReceived, showScanQrPopup, closeScanQrPopup } =
 
 function handleOpenScanner() {
   loading.value = true;
-  showScanQrPopup({});
+  try {
+    showScanQrPopup({
+      text: props.hintText
+    });
+  } catch {
+
+  }
   setTimeout(() => {
     loading.value = false;
   }, 3000);
@@ -52,12 +52,12 @@ async function handleResult({ data }: { data: string }) {
         await sendComponentResult<QrScanner.Result>({
           type: 'qr-scanner',
           value: data,
-        });
+        }, props.callbackUrl);
         closeScanQrPopup();
       }
     });
     impactOccurred('heavy');
-  } catch {}
+  } catch { }
 }
 </script>
 
