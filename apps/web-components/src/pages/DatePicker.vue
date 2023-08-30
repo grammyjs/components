@@ -1,20 +1,8 @@
 <template>
   <q-page>
-    <q-date
-      v-model="date"
-      mask="YYYY-MM-DD"
-      :first-day-of-week="fisrtDayOfWeek"
-      years-in-month-view
-      no-unset
-      flat
-      square
-    />
-    <tg-main-button
-      :text="buttonText"
-      :color="buttonColor"
-      :disabled="!isDatePicked"
-      @click="handleSend"
-    />
+    <q-date v-model="date" mask="YYYY-MM-DD" :first-day-of-week="fisrtDayOfWeek" years-in-month-view no-unset flat
+      square />
+    <tg-main-button :text="buttonText" :color="buttonColor" :disabled="!isDatePicked" @click="handleSend" />
   </q-page>
 </template>
 
@@ -29,6 +17,7 @@ import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
   sendButton?: DatePicker.Props['sendButton'];
+  callbackUrl?: DatePicker.Props['callbackUrl'];
 }>();
 
 const { t, locale, mergeLocaleMessage } = useI18n();
@@ -71,7 +60,7 @@ async function handleSend() {
   await sendComponentResult<DatePicker.Result>({
     type: 'date-picker',
     date: new Date(`${date.value}T00:00:00.000Z`),
-  });
+  }, props.callbackUrl);
 }
 </script>
 

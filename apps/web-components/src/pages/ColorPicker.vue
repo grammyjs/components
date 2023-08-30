@@ -1,13 +1,8 @@
 <template>
   <q-page>
     <q-color v-model="hex" no-header-tabs flat square />
-    <tg-main-button
-      :text="buttonText"
-      :text-color="buttonTextColor"
-      :color="hex"
-      :disabled="!isColorPicked"
-      @click="handleSend"
-    />
+    <tg-main-button :text="buttonText" :text-color="buttonTextColor" :color="hex" :disabled="!isColorPicked"
+      @click="handleSend" />
   </q-page>
 </template>
 
@@ -21,6 +16,7 @@ import { useTdesktopViewportFix } from 'composables/useTdesktopViewportFix';
 
 const props = defineProps<{
   sendButton?: ColorPicker.Props['sendButton'];
+  callbackUrl?: ColorPicker.Props['callbackUrl'];
 }>();
 
 const { offset: pageOffset } = useTdesktopViewportFix(2);
@@ -65,7 +61,7 @@ async function handleSend() {
   await sendComponentResult<ColorPicker.Result>({
     type: 'color-picker',
     hex: hex.value,
-  });
+  }, props.callbackUrl);
 }
 </script>
 
@@ -81,10 +77,7 @@ async function handleSend() {
 
 /* resize spectrum picker */
 .q-color-picker:deep().q-color-picker__spectrum {
-  height: calc(
-    var(--tg-viewport-height) - var(--header-height) - var(--slider-height) -
-      var(--tabs-height) - v-bind(pageOffset)
-  );
+  height: calc(var(--tg-viewport-height) - var(--header-height) - var(--slider-height) - var(--tabs-height) - v-bind(pageOffset));
   transition: height 0.1s ease-out;
 }
 
@@ -94,17 +87,14 @@ async function handleSend() {
 }
 
 /* resize colors of palette picker */
-.q-color-picker:deep().q-tab-panel > .q-color-picker__palette-rows {
-  height: calc(
-    var(--tg-viewport-height) - var(--header-height) - var(--tabs-height) -
-      v-bind(pageOffset)
-  );
+.q-color-picker:deep().q-tab-panel>.q-color-picker__palette-rows {
+  height: calc(var(--tg-viewport-height) - var(--header-height) - var(--tabs-height) - v-bind(pageOffset));
   transition: height 0.1s ease-out;
   align-items: inherit;
 }
 
 /* hide rgb sliders tab */
-.q-color-picker:deep().q-tabs__content > div:nth-child(2) {
+.q-color-picker:deep().q-tabs__content>div:nth-child(2) {
   display: none;
 }
 </style>

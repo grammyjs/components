@@ -1,12 +1,7 @@
 <template>
   <q-page>
     <q-time v-model="time" mask="YYYY-MM-DD HH:mm" now-btn flat square />
-    <tg-main-button
-      :text="buttonText"
-      :color="buttonColor"
-      :disabled="!isTimePicked"
-      @click="handleSend"
-    />
+    <tg-main-button :text="buttonText" :color="buttonColor" :disabled="!isTimePicked" @click="handleSend" />
   </q-page>
 </template>
 
@@ -20,6 +15,7 @@ import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
   sendButton?: TimePicker.Props['sendButton'];
+  callbackUrl?: TimePicker.Props['callbackUrl'];
 }>();
 
 const { t, locale, mergeLocaleMessage } = useI18n();
@@ -67,7 +63,7 @@ async function handleSend() {
     type: 'time-picker',
     time: resultDatetime,
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  });
+  }, props.callbackUrl);
 }
 
 const clockSize = `${innerWidth / 1.5}px`;
@@ -84,9 +80,7 @@ const clockSize = `${innerWidth / 1.5}px`;
 }
 
 .q-time:deep().q-time__content {
-  height: calc(
-    var(--tg-viewport-height) - var(--time-display-height) - v-bind(pageOffset)
-  );
+  height: calc(var(--tg-viewport-height) - var(--time-display-height) - v-bind(pageOffset));
   transition: height 0.1s ease-out;
 }
 
